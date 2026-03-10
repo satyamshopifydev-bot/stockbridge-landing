@@ -626,12 +626,15 @@
 
     // TODO: Replace this with your real form endpoint
     // Example using Formspree: fetch('https://formspree.io/f/YOUR_ID', {...})
-    setTimeout(() => {
+   fetch('https://formspree.io/f/maqpewpl', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    }).then(() => {
       document.getElementById('waitlistForm').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
-      // Update the counter (you can make this dynamic later)
       document.querySelector('.hero-note').textContent = 'Free plan forever · No credit card';
-    }, 800);
+    });
   }
 
   function handleSubmit2(e) {
