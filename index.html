@@ -1,4 +1,49 @@
-<!DOCTYPE html>
+// StockBridge Landing Page — Cloudflare Worker
+// Routes: /robots.txt, /sitemap.xml, everything else → landing page
+
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+
+    // ─── ROBOTS.TXT ───
+    if (url.pathname === '/robots.txt') {
+      return new Response(
+        `User-agent: *
+Allow: /
+
+Sitemap: https://stockbridgeapp.com/sitemap.xml`,
+        {
+          headers: {
+            'content-type': 'text/plain; charset=UTF-8',
+            'cache-control': 'public, max-age=86400',
+          },
+        }
+      );
+    }
+
+    // ─── SITEMAP.XML ───
+    if (url.pathname === '/sitemap.xml') {
+      return new Response(
+        `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://stockbridgeapp.com/</loc>
+    <lastmod>2026-03-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>`,
+        {
+          headers: {
+            'content-type': 'application/xml; charset=UTF-8',
+            'cache-control': 'public, max-age=86400',
+          },
+        }
+      );
+    }
+
+    // ─── LANDING PAGE (everything else) ───
+    const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -9,6 +54,7 @@
   <meta property="og:description" content="Sync inventory across all your Shopify stores in under 10 seconds. Free plan. No oversells. Launching soon." />
   <meta property="og:url" content="https://stockbridgeapp.com" />
   <meta name="theme-color" content="#1E3A5F" />
+  <link rel="canonical" href="https://stockbridgeapp.com/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -211,7 +257,7 @@
       display: flex; align-items: flex-start; gap: 10px;
     }
     .stocky-list li:last-child { border-bottom: none; }
-    .stocky-list li::before { content: '❌'; flex-shrink: 0; }
+    .stocky-list li::before { content: '\\u274C'; flex-shrink: 0; }
 
     /* ── FEATURES ── */
     .features-grid {
@@ -294,7 +340,7 @@
       padding: 5px 0;
       display: flex; align-items: center; gap: 8px;
     }
-    .price-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+    .price-features li::before { content: '\\u2713'; color: var(--green); font-weight: 700; flex-shrink: 0; }
     .price-target { font-size: 11px; color: var(--mid); margin-top: 16px; font-style: italic; }
 
     /* ── SOCIAL PROOF ── */
@@ -348,7 +394,7 @@
 
 <!-- ALERT BANNER -->
 <div class="alert-banner">
-  🚨 Shopify Stocky is shutting down August 31, 2026 — StockBridge is the free replacement you need
+  \\u{1F6A8} Shopify Stocky is shutting down August 31, 2026 — StockBridge is the free replacement you need
 </div>
 
 <!-- NAV -->
@@ -359,18 +405,18 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-eyebrow">🚀 The Best Stocky Alternative — Free Plan Available</div>
+  <div class="hero-eyebrow">\\u{1F680} The Best Stocky Alternative — Free Plan Available</div>
   <h1>Sync Inventory Across All Your<br /><span>Shopify Stores</span> in Under 10 Seconds</h1>
   <p class="hero-sub">Visual rules engine. Zero oversells guaranteed. Real-time sync. Free plan that actually works — no credit card needed.</p>
 
   <form class="waitlist-form" id="waitlistForm" onsubmit="handleSubmit(event)">
     <input type="email" id="emailInput" placeholder="your@email.com" required autocomplete="email" />
-    <button type="submit" id="submitBtn">Join Waitlist →</button>
+    <button type="submit" id="submitBtn">Join Waitlist \\u2192</button>
   </form>
   <div class="success-msg" id="successMsg">
-    ✅ You're on the list! We'll email you the moment StockBridge launches.
+    \\u2705 You're on the list! We'll email you the moment StockBridge launches.
   </div>
-  <p class="hero-note">Join 0 merchants waiting · Free plan forever · No credit card</p>
+  <p class="hero-note">Join 0 merchants waiting \\u00B7 Free plan forever \\u00B7 No credit card</p>
 </section>
 
 <!-- STATS STRIP -->
@@ -385,7 +431,7 @@
 <!-- STOCKY ALERT SECTION -->
 <section class="stocky-section">
   <div class="section-inner">
-    <div class="section-eyebrow" style="color:var(--red)">⚠️ Urgent Notice</div>
+    <div class="section-eyebrow" style="color:var(--red)">\\u26A0\\uFE0F Urgent Notice</div>
     <h2 class="section-title" style="color:var(--red)">Shopify Stocky Is Shutting Down</h2>
     <p class="section-sub" style="color:#374151">Stocky was delisted February 2, 2026. Full shutdown August 31, 2026. If you use Stocky today, here is what you are losing:</p>
     <div class="stocky-card">
@@ -410,35 +456,35 @@
 
     <div class="features-grid">
       <div class="feature-card">
-        <div class="feature-icon">🎯</div>
+        <div class="feature-icon">\\u{1F3AF}</div>
         <h3>Visual Rules Engine</h3>
         <p>Set buffer stock, percentage sync, and direction per product — drag and drop, no code. No other inventory sync app has this.</p>
         <span class="feature-badge">Only on StockBridge</span>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🧪</div>
+        <div class="feature-icon">\\u{1F9EA}</div>
         <h3>Test Mode</h3>
         <p>Preview exactly what will sync before going live. See every quantity change before it happens. Zero-risk onboarding.</p>
         <span class="feature-badge">Only on StockBridge</span>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">📊</div>
+        <div class="feature-icon">\\u{1F4CA}</div>
         <h3>Sync Health Score</h3>
-        <p>A 0–100 score that tells you instantly how reliably your inventory is syncing. Know your sync is working before your customers notice it isn't.</p>
+        <p>A 0\\u2013100 score that tells you instantly how reliably your inventory is syncing. Know your sync is working before your customers notice it isn't.</p>
         <span class="feature-badge">Only on StockBridge</span>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">⚡</div>
+        <div class="feature-icon">\\u26A1</div>
         <h3>Real-Time Sync &lt;10 Seconds</h3>
         <p>Webhook-powered sync. When a product sells on Store A, Store B updates in under 10 seconds. Not 15 minutes. Not hourly. Now.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🔍</div>
+        <div class="feature-icon">\\u{1F50D}</div>
         <h3>Smart SKU Matching</h3>
         <p>5-signal matching pipeline: barcode, exact SKU, fuzzy SKU, title similarity, and weight fingerprint. Even mismatched SKUs auto-map.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🛡️</div>
+        <div class="feature-icon">\\u{1F6E1}\\uFE0F</div>
         <h3>Zero Oversells — Guaranteed</h3>
         <p>Redis distributed lock + compareQuantity + hard inventory floor. The exact race condition that causes -1/-2 inventory in Syncio is impossible in StockBridge.</p>
       </div>
@@ -464,15 +510,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>Visual rules builder</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="col-us yes">✓</td></tr>
-          <tr><td>Test / preview mode</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="col-us yes">✓</td></tr>
-          <tr><td>Sync Health Score</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="col-us yes">✓</td></tr>
-          <tr><td>Barcode + fuzzy matching</td><td class="partial">Partial</td><td class="partial">Partial</td><td class="partial">Partial</td><td class="col-us yes">✓</td></tr>
-          <tr><td>Zero negative inventory</td><td class="no">✗ Bug</td><td class="yes">✓</td><td class="yes">✓</td><td class="col-us yes">✓</td></tr>
-          <tr><td>Available qty (not on-hand)</td><td class="no">✗</td><td class="partial">Partial</td><td class="yes">✓</td><td class="col-us yes">✓</td></tr>
-          <tr><td>Percentage sync</td><td class="no">✗</td><td class="no">✗</td><td class="no">✗</td><td class="col-us yes">✓</td></tr>
-          <tr><td>4-mode conflict resolution</td><td class="partial">Basic</td><td class="no">✗</td><td class="partial">Partial</td><td class="col-us yes">✓</td></tr>
-          <tr><td>Free plan (genuinely useful)</td><td class="partial">5 products</td><td class="no">✗</td><td class="partial">Limited</td><td class="col-us yes">✓ 50 SKUs</td></tr>
+          <tr><td>Visual rules builder</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="col-us yes">\\u2713</td></tr>
+          <tr><td>Test / preview mode</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="col-us yes">\\u2713</td></tr>
+          <tr><td>Sync Health Score</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="col-us yes">\\u2713</td></tr>
+          <tr><td>Barcode + fuzzy matching</td><td class="partial">Partial</td><td class="partial">Partial</td><td class="partial">Partial</td><td class="col-us yes">\\u2713</td></tr>
+          <tr><td>Zero negative inventory</td><td class="no">\\u2717 Bug</td><td class="yes">\\u2713</td><td class="yes">\\u2713</td><td class="col-us yes">\\u2713</td></tr>
+          <tr><td>Available qty (not on-hand)</td><td class="no">\\u2717</td><td class="partial">Partial</td><td class="yes">\\u2713</td><td class="col-us yes">\\u2713</td></tr>
+          <tr><td>Percentage sync</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="col-us yes">\\u2713</td></tr>
+          <tr><td>4-mode conflict resolution</td><td class="partial">Basic</td><td class="no">\\u2717</td><td class="partial">Partial</td><td class="col-us yes">\\u2713</td></tr>
+          <tr><td>Free plan (genuinely useful)</td><td class="partial">5 products</td><td class="no">\\u2717</td><td class="partial">Limited</td><td class="col-us yes">\\u2713 50 SKUs</td></tr>
           <tr><td>Starting price</td><td>$19/mo</td><td>$35/mo</td><td>Per store</td><td class="col-us" style="color:var(--green);font-weight:700;">$12.99/mo</td></tr>
         </tbody>
       </table>
@@ -480,7 +526,7 @@
   </div>
 </section>
 
-<!-- SOCIAL PROOF — Competitor Pain -->
+<!-- SOCIAL PROOF -->
 <section style="background:var(--white)">
   <div class="section-inner">
     <div class="section-eyebrow">Real Merchant Reviews</div>
@@ -488,19 +534,19 @@
     <p class="section-sub">These are real reviews from merchants using existing apps. Every complaint below is a problem StockBridge solves.</p>
     <div class="reviews-grid">
       <div class="review-card">
-        <div class="review-stars">★★★★★ → ⭐</div>
+        <div class="review-stars">\\u2B50\\u2B50\\u2B50\\u2B50\\u2B50 \\u2192 \\u2B50</div>
         <p class="review-text">"Prices, stocks and product statuses are absolutely never updated. We have received many complaints from our customers. Customer service is terrible — they blame the Shopify APIs."</p>
         <div class="review-app">Syncio merchant</div>
-        <div class="review-source">Verified review, February 2026 · After 2 years using the app</div>
+        <div class="review-source">Verified review, February 2026 \\u00B7 After 2 years using the app</div>
       </div>
       <div class="review-card">
-        <div class="review-stars">⭐</div>
+        <div class="review-stars">\\u2B50</div>
         <p class="review-text">"I did a huge restock and the app allowed SOLD OUT ITEMS to be sold. All my items were going to -1 and -2. This has really damaged my reputation with my customers."</p>
         <div class="review-app">Syncio merchant</div>
         <div class="review-source">Verified 1-star review</div>
       </div>
       <div class="review-card">
-        <div class="review-stars">⭐</div>
+        <div class="review-stars">\\u2B50</div>
         <p class="review-text">"Would change my stock levels randomly. I oversold stock and it kept changing my pictures randomly. Completely unreliable."</p>
         <div class="review-app">Multi-Store Sync Power merchant</div>
         <div class="review-source">Verified review, November 2025</div>
@@ -532,7 +578,7 @@
       <div class="price-card">
         <div class="price-name">Starter</div>
         <div class="price-amount"><sup>$</sup>12<span style="font-size:20px">.99</span></div>
-        <div class="price-period">per month · 14-day free trial</div>
+        <div class="price-period">per month \\u00B7 14-day free trial</div>
         <ul class="price-features">
           <li>2 stores</li>
           <li>500 SKUs</li>
@@ -547,7 +593,7 @@
         <div class="price-badge">Most Popular</div>
         <div class="price-name">Growth</div>
         <div class="price-amount"><sup>$</sup>34<span style="font-size:20px">.99</span></div>
-        <div class="price-period">per month · 14-day free trial</div>
+        <div class="price-period">per month \\u00B7 14-day free trial</div>
         <ul class="price-features">
           <li>5 stores</li>
           <li>5,000 SKUs</li>
@@ -561,7 +607,7 @@
       <div class="price-card">
         <div class="price-name">Business</div>
         <div class="price-amount"><sup>$</sup>79<span style="font-size:20px">.99</span></div>
-        <div class="price-period">per month · 14-day free trial</div>
+        <div class="price-period">per month \\u00B7 14-day free trial</div>
         <ul class="price-features">
           <li>10 stores</li>
           <li>20,000 SKUs</li>
@@ -575,7 +621,7 @@
       <div class="price-card">
         <div class="price-name">Enterprise</div>
         <div class="price-amount"><sup>$</sup>149<span style="font-size:20px">.99</span></div>
-        <div class="price-period">per month · 14-day free trial</div>
+        <div class="price-period">per month \\u00B7 14-day free trial</div>
         <ul class="price-features">
           <li>Unlimited stores + SKUs</li>
           <li>Dedicated success manager</li>
@@ -596,10 +642,10 @@
   <p>Join the waitlist. Get early access. Free plan available forever — no credit card needed.</p>
   <form class="waitlist-form" id="waitlistForm2" onsubmit="handleSubmit2(event)" style="justify-content:center">
     <input type="email" id="emailInput2" placeholder="your@email.com" required />
-    <button type="submit">Join Waitlist →</button>
+    <button type="submit">Join Waitlist \\u2192</button>
   </form>
   <div class="success-msg" id="successMsg2" style="background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.3)">
-    ✅ You're on the list! We'll be in touch soon.
+    \\u2705 You're on the list! We'll be in touch soon.
   </div>
   <p class="hero-note" style="margin-top:12px">No spam. Unsubscribe anytime.</p>
 </section>
@@ -611,48 +657,52 @@
     <a href="#">Privacy Policy</a>
     <a href="#">Terms of Service</a>
   </div>
-  <p>© 2026 StockBridge. Built for Shopify merchants. Not affiliated with Shopify Inc.</p>
+  <p>\\u00A9 2026 StockBridge. Built for Shopify merchants. Not affiliated with Shopify Inc.</p>
 </footer>
 
 <script>
-  // Simple waitlist handler — stores to localStorage and shows success
-  // Replace the fetch() call with your actual form backend (Cloudflare Workers / Formspree / etc.)
   function handleSubmit(e) {
     e.preventDefault();
-    const email = document.getElementById('emailInput').value;
-    const btn = document.getElementById('submitBtn');
+    var email = document.getElementById('emailInput').value;
+    var btn = document.getElementById('submitBtn');
     btn.textContent = 'Joining...';
     btn.disabled = true;
-
-    // TODO: Replace this with your real form endpoint
-    // Example using Formspree: fetch('https://formspree.io/f/YOUR_ID', {...})
-   fetch('https://formspree.io/f/maqpewpl', {
+    fetch('https://formspree.io/f/maqpewpl', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email: email })
-    }).then(() => {
+    }).then(function() {
       document.getElementById('waitlistForm').style.display = 'none';
       document.getElementById('successMsg').style.display = 'block';
-      document.querySelector('.hero-note').textContent = 'Free plan forever · No credit card';
+      document.querySelector('.hero-note').textContent = 'Free plan forever \\u00B7 No credit card';
     });
   }
 
-function handleSubmit2(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('button');
-  const email = document.getElementById('emailInput2').value;
-  btn.textContent = 'Joining...';
-  btn.disabled = true;
-  fetch('https://formspree.io/f/maqpewpl', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: email })
-  }).then(() => {
-    document.getElementById('waitlistForm2').style.display = 'none';
-    document.getElementById('successMsg2').style.display = 'block';
-  });
-}
+  function handleSubmit2(e) {
+    e.preventDefault();
+    var btn = e.target.querySelector('button');
+    var email = document.getElementById('emailInput2').value;
+    btn.textContent = 'Joining...';
+    btn.disabled = true;
+    fetch('https://formspree.io/f/maqpewpl', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email })
+    }).then(function() {
+      document.getElementById('waitlistForm2').style.display = 'none';
+      document.getElementById('successMsg2').style.display = 'block';
+    });
+  }
 </script>
 
 </body>
-</html>
+</html>`;
+
+    return new Response(html, {
+      headers: {
+        'content-type': 'text/html; charset=UTF-8',
+        'cache-control': 'public, max-age=3600',
+      },
+    });
+  },
+};
