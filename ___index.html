@@ -374,7 +374,6 @@
       .hero { padding: 120px 0 60px; }
       section { padding: 64px 0; }
       .section-header h2 { font-size: 28px; }
-      #contact .container > div { grid-template-columns: 1fr !important; }
     }
 
     /* ANIMATIONS */
@@ -389,7 +388,6 @@
     .hero-sub { animation-delay: 0.2s; }
     .hero-cta { animation-delay: 0.3s; }
     .stats-bar { animation-delay: 0.4s; }
-    html { scroll-behavior: smooth; }
   </style>
 </head>
 <body>
@@ -406,7 +404,6 @@
       <a href="#features">Features</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
       <a href="https://apps.shopify.com/stockbridge" class="btn btn-primary">Install Free</a>
     </div>
     <button class="mobile-toggle" onclick="document.querySelector('.nav-links').style.display=document.querySelector('.nav-links').style.display==='flex'?'none':'flex'" aria-label="Menu">&#9776;</button>
@@ -641,91 +638,8 @@
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="alt" id="contact">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">Contact</div>
-      <h2>Get in touch</h2>
-      <p>Have questions about StockBridge? We're here to help.</p>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:880px;margin:0 auto">
-      <!-- Contact Form -->
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px">
-        <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">Send us a message</h3>
-        <form action="https://formsubmit.co/support@stockbridgeapp.com" method="POST" style="display:flex;flex-direction:column;gap:16px">
-          <input type="hidden" name="_subject" value="StockBridge Website Contact">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_next" value="https://stockbridgeapp.com">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-            <div>
-              <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px">First Name *</label>
-              <input type="text" name="first_name" required style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-family:var(--font);font-size:14px;outline:none" placeholder="John">
-            </div>
-            <div>
-              <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px">Last Name</label>
-              <input type="text" name="last_name" style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-family:var(--font);font-size:14px;outline:none" placeholder="Doe">
-            </div>
-          </div>
-          <div>
-            <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px">Email *</label>
-            <input type="email" name="email" required style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-family:var(--font);font-size:14px;outline:none" placeholder="you@example.com">
-          </div>
-          <div>
-            <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px">Message *</label>
-            <textarea name="message" required rows="4" style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-family:var(--font);font-size:14px;outline:none;resize:vertical" placeholder="Tell us about your store setup or ask a question..."></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px">Send Message &rarr;</button>
-        </form>
-      </div>
-      <!-- Contact Info -->
-      <div style="display:flex;flex-direction:column;gap:20px">
-        <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px">
-          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:20px">Reach Us</div>
-          <div style="display:flex;flex-direction:column;gap:20px">
-            <div style="display:flex;align-items:center;gap:14px">
-              <span style="width:44px;height:44px;border-radius:12px;background:var(--accent-light);border:1px solid var(--border-accent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">&#9993;</span>
-              <div>
-                <div style="font-weight:600;font-size:14px;margin-bottom:2px">Email Us</div>
-                <div style="color:var(--text-secondary);font-size:13px">support@stockbridgeapp.com</div>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:14px">
-              <span style="width:44px;height:44px;border-radius:12px;background:var(--accent-light);border:1px solid var(--border-accent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">&#128205;</span>
-              <div>
-                <div style="font-weight:600;font-size:14px;margin-bottom:2px">Location</div>
-                <div style="color:var(--text-secondary);font-size:13px">Indore, Madhya Pradesh, India</div>
-              </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:14px">
-              <span style="width:44px;height:44px;border-radius:12px;background:var(--accent-light);border:1px solid var(--border-accent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">&#9201;</span>
-              <div>
-                <div style="font-weight:600;font-size:14px;margin-bottom:2px">Response Time</div>
-                <div style="color:var(--text-secondary);font-size:13px">We reply within 24 hours on business days</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px">
-          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:16px">Quick Help</div>
-          <div style="display:flex;flex-direction:column;gap:12px">
-            <div style="font-size:14px;color:var(--text-secondary);line-height:1.65">
-              <strong style="color:var(--text)">New to StockBridge?</strong><br>
-              Install on both stores, connect via invite link, and auto-detect your product matches. Takes under 5 minutes.
-            </div>
-            <div style="font-size:14px;color:var(--text-secondary);line-height:1.65">
-              <strong style="color:var(--text)">Need help with sync?</strong><br>
-              Check the Activity Log in your dashboard for detailed sync event history and error messages.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- CTA -->
-<section class="cta-section">
+<section class="cta-section alt">
   <div class="container">
     <h2>Ready to sync your stores?</h2>
     <p>Install StockBridge and connect your inventory in under 5 minutes. Free plan available.</p>
@@ -735,26 +649,12 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="container" style="flex-direction:column;gap:20px">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;width:100%">
-      <a href="/" class="logo" style="text-decoration:none">
-        <div class="logo-mark">SB</div>
-        StockBridge
-      </a>
-      <div class="f-links">
-        <a href="#how-it-works">How It Works</a>
-        <a href="#features">Features</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#contact">Contact</a>
-      </div>
-    </div>
-    <div style="border-top:1px solid var(--border);padding-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;width:100%">
-      <div class="copy">&copy; 2026 StockBridge &middot; Indore, India &middot; Not affiliated with Shopify Inc.</div>
-      <div class="f-links">
-        <a href="mailto:support@stockbridgeapp.com">support@stockbridgeapp.com</a>
-        <a href="https://app.stockbridgeapp.com/privacy">Privacy</a>
-        <a href="https://app.stockbridgeapp.com/terms">Terms</a>
-      </div>
+  <div class="container">
+    <div class="copy">&copy; 2026 StockBridge. Not affiliated with Shopify Inc.</div>
+    <div class="f-links">
+      <a href="mailto:support@stockbridgeapp.com">Support</a>
+      <a href="https://app.stockbridgeapp.com/privacy">Privacy Policy</a>
+      <a href="https://app.stockbridgeapp.com/terms">Terms of Service</a>
     </div>
   </div>
 </footer>
