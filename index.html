@@ -1,708 +1,659 @@
 // StockBridge Landing Page — Cloudflare Worker
-// Routes: /robots.txt, /sitemap.xml, everything else → landing page
+// Routes: /robots.txt, /sitemap.xml, /privacy, /terms, everything else → landing page
 
 export default {
   async fetch(request) {
     const url = new URL(request.url);
 
-    // ─── ROBOTS.TXT ───
+    // ——— ROBOTS.TXT ———
     if (url.pathname === '/robots.txt') {
       return new Response(
-        `User-agent: *
-Allow: /
-
-Sitemap: https://stockbridgeapp.com/sitemap.xml`,
-        {
-          headers: {
-            'content-type': 'text/plain; charset=UTF-8',
-            'cache-control': 'public, max-age=86400',
-          },
-        }
+        `User-agent: *\nAllow: /\nSitemap: https://stockbridgeapp.com/sitemap.xml`,
+        { headers: { 'content-type': 'text/plain; charset=UTF-8', 'cache-control': 'public, max-age=86400' } }
       );
     }
 
-    // ─── SITEMAP.XML ───
+    // ——— SITEMAP.XML ———
     if (url.pathname === '/sitemap.xml') {
       return new Response(
-        `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://stockbridgeapp.com/</loc>
-    <lastmod>2026-03-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-</urlset>`,
-        {
-          headers: {
-            'content-type': 'application/xml; charset=UTF-8',
-            'cache-control': 'public, max-age=86400',
-          },
-        }
+        `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://stockbridgeapp.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>\n  <url><loc>https://stockbridgeapp.com/privacy</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>\n  <url><loc>https://stockbridgeapp.com/terms</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>\n</urlset>`,
+        { headers: { 'content-type': 'application/xml; charset=UTF-8', 'cache-control': 'public, max-age=86400' } }
       );
     }
 
-    // ─── LANDING PAGE (everything else) ───
-    const html = `<!DOCTYPE html>
+    // ——— PRIVACY POLICY ———
+    if (url.pathname === '/privacy') {
+      return new Response(privacyHTML(), {
+        headers: { 'content-type': 'text/html; charset=UTF-8', 'cache-control': 'public, max-age=3600' }
+      });
+    }
+
+    // ——— TERMS OF SERVICE ———
+    if (url.pathname === '/terms') {
+      return new Response(termsHTML(), {
+        headers: { 'content-type': 'text/html; charset=UTF-8', 'cache-control': 'public, max-age=3600' }
+      });
+    }
+
+    // ——— LANDING PAGE ———
+    return new Response(landingHTML(), {
+      headers: { 'content-type': 'text/html; charset=UTF-8', 'cache-control': 'public, max-age=3600' }
+    });
+  },
+};
+
+function landingHTML() {
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>StockBridge — Multi-Store Shopify Inventory Sync</title>
-  <meta name="description" content="Shopify Stocky is shutting down August 31, 2026. StockBridge is the best free replacement — real-time inventory sync, visual rules engine, zero oversells. Join the waitlist." />
-  <meta property="og:title" content="StockBridge — The Best Stocky Alternative" />
-  <meta property="og:description" content="Sync inventory across all your Shopify stores in under 10 seconds. Free plan. No oversells. Launching soon." />
-  <meta property="og:url" content="https://stockbridgeapp.com" />
-  <meta name="theme-color" content="#1E3A5F" />
-  <link rel="canonical" href="https://stockbridgeapp.com/" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StockBridge — Multi-Store Inventory Sync for Shopify</title>
+  <meta name="description" content="Automatically sync inventory across your Shopify stores in real-time. Auto-detect product matches by SKU or barcode. Free plan available.">
+  <meta property="og:title" content="StockBridge — Multi-Store Inventory Sync for Shopify">
+  <meta property="og:description" content="Keep inventory perfectly synchronized across all your Shopify stores. Real-time sync, auto-detection, free plan available.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://stockbridgeapp.com">
+  <link rel="icon" href="https://app.stockbridgeapp.com/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --navy:   #1E3A5F;
-      --blue:   #2E75B6;
-      --green:  #1A7A4A;
-      --lgreen: #E6F4ED;
-      --red:    #C0392B;
-      --lred:   #FDECEA;
-      --orange: #E67E22;
-      --gray:   #F2F4F6;
-      --mid:    #6B7280;
-      --dark:   #111827;
-      --white:  #FFFFFF;
+      --bg: #FAFAF9;
+      --bg-card: #FFFFFF;
+      --text: #1C1917;
+      --text-secondary: #57534E;
+      --text-muted: #A8A29E;
+      --accent: #059669;
+      --accent-light: #D1FAE5;
+      --accent-dark: #047857;
+      --border: #E7E5E4;
+      --border-light: #F5F5F4;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg: 0 8px 32px rgba(0,0,0,0.08);
+      --radius: 12px;
+      --radius-sm: 8px;
+      --font: 'DM Sans', system-ui, sans-serif;
+      --mono: 'JetBrains Mono', monospace;
     }
-
-    html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: var(--white);
-      color: var(--dark);
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
       line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ── NAV ── */
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+    /* NAV */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid #E5E7EB;
-      padding: 0 24px;
+      background: rgba(250,250,249,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container {
       display: flex; align-items: center; justify-content: space-between;
-      height: 60px;
+      height: 64px;
     }
-    .nav-logo { font-size: 20px; font-weight: 800; color: var(--navy); letter-spacing: -0.5px; }
-    .nav-logo span { color: var(--blue); }
-    .nav-badge {
-      background: var(--lred); color: var(--red);
-      font-size: 12px; font-weight: 600;
-      padding: 4px 10px; border-radius: 20px;
-      border: 1px solid #FBBABA;
-    }
-
-    /* ── ALERT BANNER ── */
-    .alert-banner {
-      background: var(--lred);
-      border-bottom: 2px solid var(--red);
-      padding: 10px 24px;
-      text-align: center;
-      font-size: 14px;
-      color: var(--red);
-      font-weight: 600;
-    }
-    .alert-banner a { color: var(--red); }
-
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(135deg, var(--navy) 0%, #2E4F7A 60%, #1A5276 100%);
-      color: var(--white);
-      padding: 80px 24px 90px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 70% 50%, rgba(46,117,182,0.3) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .hero-eyebrow {
-      display: inline-block;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.2);
-      color: #93C5FD;
-      font-size: 13px; font-weight: 600;
-      padding: 6px 16px; border-radius: 20px;
-      margin-bottom: 24px; letter-spacing: 0.5px;
-    }
-    .hero h1 {
-      font-size: clamp(32px, 6vw, 64px);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -1.5px;
-      margin-bottom: 20px;
-      max-width: 800px;
-      margin-left: auto; margin-right: auto;
-    }
-    .hero h1 span { color: #60A5FA; }
-    .hero-sub {
-      font-size: clamp(16px, 2.5vw, 20px);
-      color: rgba(255,255,255,0.8);
-      max-width: 580px;
-      margin: 0 auto 40px;
-      font-weight: 400;
-    }
-
-    /* ── WAITLIST FORM ── */
-    .waitlist-form {
-      display: flex; gap: 10px;
-      max-width: 480px;
-      margin: 0 auto 16px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .waitlist-form input {
-      flex: 1; min-width: 240px;
-      padding: 14px 18px;
-      border-radius: 10px;
-      border: 2px solid rgba(255,255,255,0.2);
-      background: rgba(255,255,255,0.1);
-      color: var(--white);
-      font-size: 15px;
-      font-family: 'Inter', sans-serif;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .waitlist-form input::placeholder { color: rgba(255,255,255,0.5); }
-    .waitlist-form input:focus { border-color: #60A5FA; background: rgba(255,255,255,0.15); }
-    .waitlist-form button {
-      padding: 14px 28px;
-      background: #2563EB;
-      color: var(--white);
-      border: none; border-radius: 10px;
-      font-size: 15px; font-weight: 700;
-      cursor: pointer;
-      font-family: 'Inter', sans-serif;
-      transition: background 0.2s, transform 0.1s;
-      white-space: nowrap;
-    }
-    .waitlist-form button:hover { background: #1D4ED8; transform: translateY(-1px); }
-    .waitlist-form button:active { transform: translateY(0); }
-    .hero-note { font-size: 13px; color: rgba(255,255,255,0.5); }
-
-    /* success state */
-    .success-msg {
-      display: none;
-      background: var(--lgreen);
-      color: var(--green);
-      border: 1px solid #86EFAC;
-      padding: 14px 24px;
-      border-radius: 10px;
-      font-weight: 600;
-      font-size: 15px;
-      max-width: 480px;
-      margin: 0 auto 16px;
-    }
-
-    /* ── STATS STRIP ── */
-    .stats-strip {
-      background: var(--gray);
-      border-bottom: 1px solid #E5E7EB;
-      padding: 20px 24px;
-      display: flex;
-      justify-content: center;
-      gap: 48px;
-      flex-wrap: wrap;
-    }
-    .stat-item { text-align: center; }
-    .stat-num { font-size: 28px; font-weight: 800; color: var(--navy); }
-    .stat-label { font-size: 12px; color: var(--mid); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
-
-    /* ── SECTION ── */
-    section { padding: 72px 24px; }
-    .section-inner { max-width: 1080px; margin: 0 auto; }
-    .section-eyebrow {
-      font-size: 12px; font-weight: 700; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--blue);
-      margin-bottom: 12px;
-    }
-    .section-title {
-      font-size: clamp(26px, 4vw, 42px);
-      font-weight: 800; color: var(--navy);
-      letter-spacing: -1px; line-height: 1.15;
-      margin-bottom: 16px;
-    }
-    .section-sub { font-size: 17px; color: var(--mid); max-width: 560px; }
-
-    /* ── STOCKY ALERT ── */
-    .stocky-section { background: var(--lred); border-top: 3px solid var(--red); border-bottom: 3px solid var(--red); }
-    .stocky-card {
-      background: var(--white);
-      border: 2px solid #FBBABA;
-      border-radius: 16px;
-      padding: 32px;
-      max-width: 720px;
-      margin: 32px auto 0;
-    }
-    .stocky-card h3 { font-size: 20px; font-weight: 700; color: var(--red); margin-bottom: 12px; }
-    .stocky-card p { color: #374151; font-size: 15px; margin-bottom: 16px; }
-    .stocky-list { list-style: none; }
-    .stocky-list li {
-      padding: 8px 0;
-      border-bottom: 1px solid #FEE2E2;
-      font-size: 15px; color: #374151;
-      display: flex; align-items: flex-start; gap: 10px;
-    }
-    .stocky-list li:last-child { border-bottom: none; }
-    .stocky-list li::before { content: '\\u274C'; flex-shrink: 0; }
-
-    /* ── FEATURES ── */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      margin-top: 48px;
-    }
-    .feature-card {
-      background: var(--white);
-      border: 1px solid #E5E7EB;
-      border-radius: 16px;
-      padding: 28px;
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-    .feature-card:hover { box-shadow: 0 8px 32px rgba(30,58,95,0.1); transform: translateY(-2px); }
-    .feature-icon { font-size: 32px; margin-bottom: 16px; }
-    .feature-card h3 { font-size: 17px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
-    .feature-card p { font-size: 14px; color: var(--mid); line-height: 1.6; }
-    .feature-badge {
-      display: inline-block; margin-top: 12px;
-      background: var(--lgreen); color: var(--green);
-      font-size: 11px; font-weight: 700;
-      padding: 3px 10px; border-radius: 20px;
-      text-transform: uppercase; letter-spacing: 0.5px;
-    }
-
-    /* ── COMPARISON TABLE ── */
-    .compare-section { background: var(--gray); }
-    .compare-wrap { overflow-x: auto; margin-top: 40px; }
-    table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
-    th { background: var(--navy); color: var(--white); padding: 14px 16px; font-size: 13px; font-weight: 700; text-align: center; }
-    th:first-child { text-align: left; }
-    td { padding: 12px 16px; font-size: 14px; border-bottom: 1px solid #F3F4F6; text-align: center; }
-    td:first-child { text-align: left; font-weight: 500; color: var(--navy); }
-    tr:last-child td { border-bottom: none; }
-    tr:nth-child(even) td { background: #FAFAFA; }
-    .col-us { background: #EFF6FF !important; font-weight: 700; }
-    .col-us-h { background: #1D4ED8 !important; }
-    .yes { color: var(--green); font-weight: 700; font-size: 16px; }
-    .no  { color: #D1D5DB; font-size: 16px; }
-    .partial { color: var(--orange); font-weight: 600; font-size: 13px; }
-
-    /* ── PRICING ── */
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
-      margin-top: 48px;
-      align-items: start;
-    }
-    .price-card {
-      border: 2px solid #E5E7EB;
-      border-radius: 16px;
-      padding: 28px 20px;
-      text-align: center;
-      background: var(--white);
-      position: relative;
-      transition: box-shadow 0.2s;
-    }
-    .price-card:hover { box-shadow: 0 8px 32px rgba(30,58,95,0.1); }
-    .price-card.featured {
-      border-color: var(--blue);
-      box-shadow: 0 8px 32px rgba(46,117,182,0.15);
-    }
-    .price-badge {
-      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-      background: var(--blue); color: var(--white);
-      font-size: 11px; font-weight: 700;
-      padding: 4px 14px; border-radius: 20px;
-      white-space: nowrap;
-    }
-    .price-name { font-size: 14px; font-weight: 700; color: var(--mid); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
-    .price-amount { font-size: 36px; font-weight: 800; color: var(--navy); line-height: 1; }
-    .price-amount sup { font-size: 18px; vertical-align: top; margin-top: 6px; }
-    .price-period { font-size: 13px; color: var(--mid); margin-bottom: 20px; }
-    .price-features { list-style: none; text-align: left; }
-    .price-features li {
-      font-size: 13px; color: #374151;
-      padding: 5px 0;
+    .logo {
+      font-size: 20px; font-weight: 700; color: var(--text);
       display: flex; align-items: center; gap: 8px;
     }
-    .price-features li::before { content: '\\u2713'; color: var(--green); font-weight: 700; flex-shrink: 0; }
-    .price-target { font-size: 11px; color: var(--mid); margin-top: 16px; font-style: italic; }
+    .logo-mark {
+      width: 32px; height: 32px; background: var(--accent); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 700; font-size: 16px;
+    }
+    .nav-links { display: flex; align-items: center; gap: 32px; font-size: 14px; font-weight: 500; }
+    .nav-links a { color: var(--text-secondary); }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 20px; border-radius: var(--radius-sm);
+      font-weight: 600; font-size: 14px; font-family: var(--font);
+      border: none; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-primary {
+      background: var(--accent); color: white;
+    }
+    .btn-primary:hover { background: var(--accent-dark); text-decoration: none; }
+    .btn-outline {
+      background: transparent; color: var(--text); border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--text-secondary); text-decoration: none; }
 
-    /* ── SOCIAL PROOF ── */
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    /* HERO */
+    .hero {
+      padding: 80px 0 64px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--accent-light); color: var(--accent-dark);
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 13px; font-weight: 600;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 700; line-height: 1.15;
+      letter-spacing: -0.02em;
+      max-width: 720px; margin: 0 auto 20px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      font-size: 18px; color: var(--text-secondary);
+      max-width: 560px; margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+    .hero-cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .hero-stats {
+      display: flex; gap: 48px; justify-content: center;
+      margin-top: 48px; padding-top: 48px;
+      border-top: 1px solid var(--border);
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat .num {
+      font-size: 28px; font-weight: 700; color: var(--text);
+      font-family: var(--mono);
+    }
+    .hero-stat .label {
+      font-size: 13px; color: var(--text-muted); margin-top: 4px;
+    }
+
+    /* SECTION */
+    section { padding: 80px 0; }
+    section.alt { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .section-header {
+      text-align: center; margin-bottom: 48px;
+    }
+    .section-header h2 {
+      font-size: 32px; font-weight: 700; letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+    .section-header p {
+      font-size: 16px; color: var(--text-secondary); max-width: 520px; margin: 0 auto;
+    }
+
+    /* HOW IT WORKS */
+    .steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+    .step {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+      position: relative;
+    }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--accent); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 15px; margin-bottom: 16px;
+    }
+    .step h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .step p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+    /* FEATURES */
+    .features {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 20px;
-      margin-top: 40px;
     }
-    .review-card {
-      background: var(--white);
-      border: 1px solid #E5E7EB;
-      border-radius: 14px;
-      padding: 24px;
+    .feature {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+      transition: box-shadow 0.2s;
     }
-    .review-stars { color: #F59E0B; font-size: 16px; margin-bottom: 12px; }
-    .review-text { font-size: 14px; color: #374151; line-height: 1.6; margin-bottom: 16px; font-style: italic; }
-    .review-app { font-size: 12px; color: var(--mid); font-weight: 600; }
-    .review-source { font-size: 11px; color: #9CA3AF; }
+    .feature:hover { box-shadow: var(--shadow-md); }
+    .feature-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; margin-bottom: 16px;
+      background: var(--accent-light);
+    }
+    .feature h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .feature p { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
-    /* ── CTA SECTION ── */
+    /* PRICING */
+    .pricing-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .plan {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 28px;
+      display: flex; flex-direction: column;
+    }
+    .plan.popular {
+      border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent);
+      position: relative;
+    }
+    .plan.popular::before {
+      content: 'Most Popular';
+      position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+      background: var(--accent); color: white;
+      padding: 4px 12px; border-radius: 12px;
+      font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .plan-name { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+    .plan-price {
+      font-size: 32px; font-weight: 700; font-family: var(--mono);
+      margin-bottom: 4px;
+    }
+    .plan-price span { font-size: 14px; font-weight: 400; color: var(--text-muted); }
+    .plan-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; }
+    .plan-features { list-style: none; flex: 1; margin-bottom: 24px; }
+    .plan-features li {
+      font-size: 13px; color: var(--text-secondary);
+      padding: 6px 0; display: flex; align-items: center; gap: 8px;
+    }
+    .plan-features li::before { content: '\\2713'; color: var(--accent); font-weight: 700; font-size: 14px; }
+
+    /* FAQ */
+    .faq-list { max-width: 680px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--border); padding: 20px 0;
+    }
+    .faq-q {
+      font-size: 15px; font-weight: 600; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq-q::after { content: '+'; font-size: 20px; color: var(--text-muted); transition: transform 0.2s; }
+    .faq-item.open .faq-q::after { transform: rotate(45deg); }
+    .faq-a {
+      font-size: 14px; color: var(--text-secondary); line-height: 1.7;
+      max-height: 0; overflow: hidden; transition: max-height 0.3s, padding 0.3s;
+    }
+    .faq-item.open .faq-a { max-height: 200px; padding-top: 12px; }
+
+    /* CTA */
     .cta-section {
-      background: linear-gradient(135deg, var(--navy) 0%, #1A5276 100%);
-      color: var(--white);
-      text-align: center;
-      padding: 80px 24px;
+      text-align: center; padding: 80px 0;
     }
-    .cta-section h2 { font-size: clamp(26px, 4vw, 44px); font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; }
-    .cta-section p { font-size: 18px; color: rgba(255,255,255,0.75); margin-bottom: 40px; }
+    .cta-section h2 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
+    .cta-section p { font-size: 16px; color: var(--text-secondary); margin-bottom: 28px; }
 
-    /* ── FOOTER ── */
+    /* FOOTER */
     footer {
-      background: #0F172A;
-      color: rgba(255,255,255,0.5);
-      padding: 32px 24px;
-      text-align: center;
-      font-size: 13px;
+      border-top: 1px solid var(--border); padding: 40px 0;
     }
-    footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
-    footer a:hover { color: var(--white); }
-    .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
+    footer .container {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+    footer .copy { font-size: 13px; color: var(--text-muted); }
+    footer .links { display: flex; gap: 24px; font-size: 13px; }
+    footer .links a { color: var(--text-secondary); }
 
-    @media (max-width: 600px) {
-      .stats-strip { gap: 24px; }
-      .waitlist-form { flex-direction: column; }
-      .waitlist-form input, .waitlist-form button { width: 100%; }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hero-stats { gap: 24px; flex-wrap: wrap; }
+      .hero-cta { flex-direction: column; align-items: center; }
+      .pricing-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
-<!-- ALERT BANNER -->
-<div class="alert-banner">
-  \\u{1F6A8} Shopify Stocky is shutting down August 31, 2026 — StockBridge is the free replacement you need
-</div>
-
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">Stock<span>Bridge</span></div>
-  <div class="nav-badge">Launching Soon</div>
+  <div class="container">
+    <div class="logo">
+      <div class="logo-mark">SB</div>
+      StockBridge
+    </div>
+    <div class="nav-links">
+      <a href="#how-it-works">How It Works</a>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://apps.shopify.com/stockbridge" class="btn btn-primary">Install Free</a>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-eyebrow">\\u{1F680} The Best Stocky Alternative — Free Plan Available</div>
-  <h1>Sync Inventory Across All Your<br /><span>Shopify Stores</span> in Under 10 Seconds</h1>
-  <p class="hero-sub">Visual rules engine. Zero oversells guaranteed. Real-time sync. Free plan that actually works — no credit card needed.</p>
-
-  <form class="waitlist-form" id="waitlistForm" onsubmit="handleSubmit(event)">
-    <input type="email" id="emailInput" placeholder="your@email.com" required autocomplete="email" />
-    <button type="submit" id="submitBtn">Join Waitlist \\u2192</button>
-  </form>
-  <div class="success-msg" id="successMsg">
-    \\u2705 You're on the list! We'll email you the moment StockBridge launches.
+  <div class="container">
+    <div class="hero-badge">\u2713 Free plan available \u00B7 No credit card required</div>
+    <h1>Sync inventory across all your <span>Shopify stores</span></h1>
+    <p>When a product sells on one store, every connected store updates in seconds. Auto-detection, real-time sync, and a free plan that works.</p>
+    <div class="hero-cta">
+      <a href="https://apps.shopify.com/stockbridge" class="btn btn-primary">Install on Shopify \u2192</a>
+      <a href="#how-it-works" class="btn btn-outline">See How It Works</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">&lt;10s</div><div class="label">Sync Speed</div></div>
+      <div class="hero-stat"><div class="num">11K+</div><div class="label">SKUs Synced</div></div>
+      <div class="hero-stat"><div class="num">5</div><div class="label">Pricing Plans</div></div>
+      <div class="hero-stat"><div class="num">Free</div><div class="label">Destination Stores</div></div>
+    </div>
   </div>
-  <p class="hero-note">Join 0 merchants waiting \\u00B7 Free plan forever \\u00B7 No credit card</p>
 </section>
 
-<!-- STATS STRIP -->
-<div class="stats-strip">
-  <div class="stat-item"><div class="stat-num">&lt;10s</div><div class="stat-label">Sync Speed</div></div>
-  <div class="stat-item"><div class="stat-num">0</div><div class="stat-label">Oversells Guaranteed</div></div>
-  <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Pricing Tiers</div></div>
-  <div class="stat-item"><div class="stat-num">Free</div><div class="stat-label">Plan Forever</div></div>
-  <div class="stat-item"><div class="stat-num">50%</div><div class="stat-label">Cheaper Than Syncio</div></div>
-</div>
-
-<!-- STOCKY ALERT SECTION -->
-<section class="stocky-section">
-  <div class="section-inner">
-    <div class="section-eyebrow" style="color:var(--red)">\\u26A0\\uFE0F Urgent Notice</div>
-    <h2 class="section-title" style="color:var(--red)">Shopify Stocky Is Shutting Down</h2>
-    <p class="section-sub" style="color:#374151">Stocky was delisted February 2, 2026. Full shutdown August 31, 2026. If you use Stocky today, here is what you are losing:</p>
-    <div class="stocky-card">
-      <h3>What disappears on August 31, 2026</h3>
-      <p>Thousands of merchants are searching for a replacement right now. StockBridge was built specifically to replace everything Stocky did — and do it better.</p>
-      <ul class="stocky-list">
-        <li>Inventory tracking and management across your stores</li>
-        <li>Purchase orders and demand forecasting</li>
-        <li>All your historical inventory data becomes inaccessible</li>
-        <li>No native Shopify replacement covers all Stocky features</li>
-      </ul>
+<!-- HOW IT WORKS -->
+<section class="alt" id="how-it-works">
+  <div class="container">
+    <div class="section-header">
+      <h2>Up and running in 5 minutes</h2>
+      <p>No complex setup. No CSV imports. Connect your stores and let StockBridge handle the rest.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Install on both stores</h3>
+        <p>Install StockBridge from the Shopify App Store on your source and destination stores. Takes 30 seconds each.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Connect with an invite link</h3>
+        <p>Generate an invite link on your source store, paste it on the destination store. One click to connect.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Auto-detect product matches</h3>
+        <p>StockBridge scans both stores and automatically matches products by SKU or barcode. No manual mapping needed.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Inventory syncs automatically</h3>
+        <p>From now on, every sale, restock, or adjustment on one store updates all connected stores in real-time.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- FEATURES -->
-<section style="background:var(--white)">
-  <div class="section-inner">
-    <div class="section-eyebrow">Why StockBridge</div>
-    <h2 class="section-title">Everything Your Current App<br />Gets Wrong — Fixed</h2>
-    <p class="section-sub">Built after reading every 1-star review of every competitor. Every gap is a StockBridge feature.</p>
-
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon">\\u{1F3AF}</div>
-        <h3>Visual Rules Engine</h3>
-        <p>Set buffer stock, percentage sync, and direction per product — drag and drop, no code. No other inventory sync app has this.</p>
-        <span class="feature-badge">Only on StockBridge</span>
+<section id="features">
+  <div class="container">
+    <div class="section-header">
+      <h2>Built for multi-store merchants</h2>
+      <p>Everything you need to keep inventory synchronized across your Shopify stores.</p>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">\u26A1</div>
+        <h3>Real-Time Webhook Sync</h3>
+        <p>Inventory updates propagate within seconds via Shopify webhooks. No polling delays or hourly batch jobs.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">\\u{1F9EA}</div>
-        <h3>Test Mode</h3>
-        <p>Preview exactly what will sync before going live. See every quantity change before it happens. Zero-risk onboarding.</p>
-        <span class="feature-badge">Only on StockBridge</span>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">\\u{1F4CA}</div>
-        <h3>Sync Health Score</h3>
-        <p>A 0\\u2013100 score that tells you instantly how reliably your inventory is syncing. Know your sync is working before your customers notice it isn't.</p>
-        <span class="feature-badge">Only on StockBridge</span>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">\\u26A1</div>
-        <h3>Real-Time Sync &lt;10 Seconds</h3>
-        <p>Webhook-powered sync. When a product sells on Store A, Store B updates in under 10 seconds. Not 15 minutes. Not hourly. Now.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-icon">\\u{1F50D}</div>
+      <div class="feature">
+        <div class="feature-icon">\uD83D\uDD0D</div>
         <h3>Smart SKU Matching</h3>
-        <p>5-signal matching pipeline: barcode, exact SKU, fuzzy SKU, title similarity, and weight fingerprint. Even mismatched SKUs auto-map.</p>
+        <p>Automatically maps products across stores by barcode or SKU. Handles thousands of products with paginated scanning.</p>
       </div>
-      <div class="feature-card">
-        <div class="feature-icon">\\u{1F6E1}\\uFE0F</div>
-        <h3>Zero Oversells — Guaranteed</h3>
-        <p>Redis distributed lock + compareQuantity + hard inventory floor. The exact race condition that causes -1/-2 inventory in Syncio is impossible in StockBridge.</p>
+      <div class="feature">
+        <div class="feature-icon">\uD83D\uDD04</div>
+        <h3>Bidirectional Sync</h3>
+        <p>Changes on any connected store sync to all others. Built-in echo prevention stops infinite sync loops.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- COMPARISON -->
-<section class="compare-section">
-  <div class="section-inner">
-    <div class="section-eyebrow">Comparison</div>
-    <h2 class="section-title">How StockBridge Compares</h2>
-    <p class="section-sub">Every feature gap in every competitor is a StockBridge feature.</p>
-    <div class="compare-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th>Feature</th>
-            <th>Syncio</th>
-            <th>Trunk</th>
-            <th>Synkro</th>
-            <th class="col-us-h">StockBridge</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Visual rules builder</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="col-us yes">\\u2713</td></tr>
-          <tr><td>Test / preview mode</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="col-us yes">\\u2713</td></tr>
-          <tr><td>Sync Health Score</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="col-us yes">\\u2713</td></tr>
-          <tr><td>Barcode + fuzzy matching</td><td class="partial">Partial</td><td class="partial">Partial</td><td class="partial">Partial</td><td class="col-us yes">\\u2713</td></tr>
-          <tr><td>Zero negative inventory</td><td class="no">\\u2717 Bug</td><td class="yes">\\u2713</td><td class="yes">\\u2713</td><td class="col-us yes">\\u2713</td></tr>
-          <tr><td>Available qty (not on-hand)</td><td class="no">\\u2717</td><td class="partial">Partial</td><td class="yes">\\u2713</td><td class="col-us yes">\\u2713</td></tr>
-          <tr><td>Percentage sync</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="no">\\u2717</td><td class="col-us yes">\\u2713</td></tr>
-          <tr><td>4-mode conflict resolution</td><td class="partial">Basic</td><td class="no">\\u2717</td><td class="partial">Partial</td><td class="col-us yes">\\u2713</td></tr>
-          <tr><td>Free plan (genuinely useful)</td><td class="partial">5 products</td><td class="no">\\u2717</td><td class="partial">Limited</td><td class="col-us yes">\\u2713 50 SKUs</td></tr>
-          <tr><td>Starting price</td><td>$19/mo</td><td>$35/mo</td><td>Per store</td><td class="col-us" style="color:var(--green);font-weight:700;">$12.99/mo</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</section>
-
-<!-- SOCIAL PROOF -->
-<section style="background:var(--white)">
-  <div class="section-inner">
-    <div class="section-eyebrow">Real Merchant Reviews</div>
-    <h2 class="section-title">Why Merchants Are Switching</h2>
-    <p class="section-sub">These are real reviews from merchants using existing apps. Every complaint below is a problem StockBridge solves.</p>
-    <div class="reviews-grid">
-      <div class="review-card">
-        <div class="review-stars">\\u2B50\\u2B50\\u2B50\\u2B50\\u2B50 \\u2192 \\u2B50</div>
-        <p class="review-text">"Prices, stocks and product statuses are absolutely never updated. We have received many complaints from our customers. Customer service is terrible — they blame the Shopify APIs."</p>
-        <div class="review-app">Syncio merchant</div>
-        <div class="review-source">Verified review, February 2026 \\u00B7 After 2 years using the app</div>
+      <div class="feature">
+        <div class="feature-icon">\uD83D\uDCCB</div>
+        <h3>Custom Sync Rules</h3>
+        <p>Set buffer stock, percentage sync, one-way direction, or skip specific products. Rules are evaluated by priority.</p>
       </div>
-      <div class="review-card">
-        <div class="review-stars">\\u2B50</div>
-        <p class="review-text">"I did a huge restock and the app allowed SOLD OUT ITEMS to be sold. All my items were going to -1 and -2. This has really damaged my reputation with my customers."</p>
-        <div class="review-app">Syncio merchant</div>
-        <div class="review-source">Verified 1-star review</div>
+      <div class="feature">
+        <div class="feature-icon">\uD83D\uDCCA</div>
+        <h3>Drift Analytics</h3>
+        <p>Monitor inventory discrepancies across stores. Catch drift before it causes oversells or stockouts.</p>
       </div>
-      <div class="review-card">
-        <div class="review-stars">\\u2B50</div>
-        <p class="review-text">"Would change my stock levels randomly. I oversold stock and it kept changing my pictures randomly. Completely unreliable."</p>
-        <div class="review-app">Multi-Store Sync Power merchant</div>
-        <div class="review-source">Verified review, November 2025</div>
+      <div class="feature">
+        <div class="feature-icon">\uD83D\uDCDD</div>
+        <h3>Full Activity Log</h3>
+        <p>Complete audit trail of every sync event. See exactly what changed, when, and between which stores.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- PRICING -->
-<section style="background:var(--gray)">
-  <div class="section-inner">
-    <div class="section-eyebrow">Pricing</div>
-    <h2 class="section-title">Simple, Transparent Pricing</h2>
-    <p class="section-sub">No hidden add-ons. No order-based billing. Pay for what you sync — nothing more.</p>
+<section class="alt" id="pricing">
+  <div class="container">
+    <div class="section-header">
+      <h2>Simple, transparent pricing</h2>
+      <p>Only the source store pays. Destination stores always install and sync for free.</p>
+    </div>
     <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-name">Free</div>
-        <div class="price-amount">$0</div>
-        <div class="price-period">forever</div>
-        <ul class="price-features">
+      <div class="plan">
+        <div class="plan-name">Free</div>
+        <div class="plan-price">$0 <span>forever</span></div>
+        <div class="plan-desc">Get started with basic sync</div>
+        <ul class="plan-features">
           <li>2 stores</li>
           <li>50 SKUs</li>
           <li>One-way sync</li>
           <li>1 sync rule</li>
-          <li>15-min polling</li>
         </ul>
-        <div class="price-target">For: Shopify Basic merchants</div>
+        <a href="https://apps.shopify.com/stockbridge" class="btn btn-outline" style="width:100%;justify-content:center;">Install Free</a>
       </div>
-      <div class="price-card">
-        <div class="price-name">Starter</div>
-        <div class="price-amount"><sup>$</sup>12<span style="font-size:20px">.99</span></div>
-        <div class="price-period">per month \\u00B7 14-day free trial</div>
-        <ul class="price-features">
+      <div class="plan">
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">$9.99 <span>/mo</span></div>
+        <div class="plan-desc">For growing multi-store setups</div>
+        <ul class="plan-features">
           <li>2 stores</li>
           <li>500 SKUs</li>
           <li>Bidirectional sync</li>
           <li>Real-time webhooks</li>
           <li>5 sync rules</li>
-          <li>Buffer stock</li>
         </ul>
-        <div class="price-target">vs Syncio: $19/mo — save 32%</div>
+        <a href="https://apps.shopify.com/stockbridge" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a>
       </div>
-      <div class="price-card featured">
-        <div class="price-badge">Most Popular</div>
-        <div class="price-name">Growth</div>
-        <div class="price-amount"><sup>$</sup>34<span style="font-size:20px">.99</span></div>
-        <div class="price-period">per month \\u00B7 14-day free trial</div>
-        <ul class="price-features">
+      <div class="plan popular">
+        <div class="plan-name">Growth</div>
+        <div class="plan-price">$34.99 <span>/mo</span></div>
+        <div class="plan-desc">For established merchants</div>
+        <ul class="plan-features">
           <li>5 stores</li>
           <li>5,000 SKUs</li>
-          <li>All conflict strategies</li>
-          <li>Percentage sync</li>
+          <li>Drift analytics</li>
           <li>Unlimited rules</li>
-          <li>CSV import/export</li>
+          <li>Priority support</li>
         </ul>
-        <div class="price-target">vs Trunk: $89/mo — save 60%</div>
+        <a href="https://apps.shopify.com/stockbridge" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a>
       </div>
-      <div class="price-card">
-        <div class="price-name">Business</div>
-        <div class="price-amount"><sup>$</sup>79<span style="font-size:20px">.99</span></div>
-        <div class="price-period">per month \\u00B7 14-day free trial</div>
-        <ul class="price-features">
+      <div class="plan">
+        <div class="plan-name">Business</div>
+        <div class="plan-price">$79.99 <span>/mo</span></div>
+        <div class="plan-desc">For high-volume operations</div>
+        <ul class="plan-features">
           <li>10 stores</li>
           <li>20,000 SKUs</li>
-          <li>Multi-location routing</li>
-          <li>Shopify Flow triggers</li>
           <li>API access</li>
-          <li>Live chat support</li>
+          <li>Advanced rules</li>
+          <li>Dedicated support</li>
         </ul>
-        <div class="price-target">For: Shopify Advanced merchants</div>
+        <a href="https://apps.shopify.com/stockbridge" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a>
       </div>
-      <div class="price-card">
-        <div class="price-name">Enterprise</div>
-        <div class="price-amount"><sup>$</sup>149<span style="font-size:20px">.99</span></div>
-        <div class="price-period">per month \\u00B7 14-day free trial</div>
-        <ul class="price-features">
-          <li>Unlimited stores + SKUs</li>
-          <li>Dedicated success manager</li>
+      <div class="plan">
+        <div class="plan-name">Enterprise</div>
+        <div class="plan-price">$149.99 <span>/mo</span></div>
+        <div class="plan-desc">Unlimited everything</div>
+        <ul class="plan-features">
+          <li>Unlimited stores</li>
+          <li>Unlimited SKUs</li>
+          <li>Unlimited rules</li>
           <li>SLA guarantee</li>
-          <li>White-label option</li>
-          <li>Slack shared channel</li>
-          <li>1-hour P1 response</li>
+          <li>Dedicated manager</li>
         </ul>
-        <div class="price-target">vs SKULabs: $299/mo — save 50%</div>
+        <a href="https://apps.shopify.com/stockbridge" class="btn btn-primary" style="width:100%;justify-content:center;">Contact Sales</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- BOTTOM CTA -->
-<section class="cta-section">
-  <h2>Be First When StockBridge Launches</h2>
-  <p>Join the waitlist. Get early access. Free plan available forever — no credit card needed.</p>
-  <form class="waitlist-form" id="waitlistForm2" onsubmit="handleSubmit2(event)" style="justify-content:center">
-    <input type="email" id="emailInput2" placeholder="your@email.com" required />
-    <button type="submit">Join Waitlist \\u2192</button>
-  </form>
-  <div class="success-msg" id="successMsg2" style="background:rgba(255,255,255,0.15);color:#fff;border-color:rgba(255,255,255,0.3)">
-    \\u2705 You're on the list! We'll be in touch soon.
+<!-- FAQ -->
+<section id="faq">
+  <div class="container">
+    <div class="section-header">
+      <h2>Frequently asked questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How does StockBridge sync inventory?</div>
+        <div class="faq-a">StockBridge uses Shopify webhooks to detect inventory changes in real-time. When a product sells or is restocked on one store, the webhook fires and StockBridge updates all connected stores within seconds. No polling or batch jobs needed on paid plans.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do both stores need to pay?</div>
+        <div class="faq-a">No. Only the source (primary) store pays for the plan. Destination stores install StockBridge completely free and inherit all features from the source store's plan.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How are products matched between stores?</div>
+        <div class="faq-a">StockBridge auto-detects matching products by scanning barcodes and SKUs across both stores. Products with matching barcodes or exact SKU matches are automatically paired. You can also manually map products if needed.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What happens if both stores sell at the same time?</div>
+        <div class="faq-a">StockBridge includes echo prevention to avoid infinite sync loops. When a sync update is made by StockBridge, it recognizes the change and skips re-syncing it back, preventing conflicts.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I sync more than 2 stores?</div>
+        <div class="faq-a">Yes. The Growth plan supports up to 5 stores, Business supports 10, and Enterprise has unlimited stores. All connected stores sync with each other automatically.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is there a free trial?</div>
+        <div class="faq-a">The Free plan is available forever with 50 SKUs and 2 stores. Paid plans can be tested using Shopify's built-in billing test mode on development stores.</div>
+      </div>
+    </div>
   </div>
-  <p class="hero-note" style="margin-top:12px">No spam. Unsubscribe anytime.</p>
+</section>
+
+<!-- CTA -->
+<section class="cta-section alt">
+  <div class="container">
+    <h2>Ready to stop overselling?</h2>
+    <p>Install StockBridge and sync your stores in under 5 minutes. Free plan available.</p>
+    <a href="https://apps.shopify.com/stockbridge" class="btn btn-primary">Install on Shopify \u2192</a>
+  </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-links">
-    <a href="mailto:hello@stockbridgeapp.com">hello@stockbridgeapp.com</a>
-    <a href="#">Privacy Policy</a>
-    <a href="#">Terms of Service</a>
+  <div class="container">
+    <div class="copy">\u00A9 2026 StockBridge. Not affiliated with Shopify Inc.</div>
+    <div class="links">
+      <a href="mailto:support@stockbridgeapp.com">Support</a>
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+    </div>
   </div>
-  <p>\\u00A9 2026 StockBridge. Built for Shopify merchants. Not affiliated with Shopify Inc.</p>
 </footer>
-
-<script>
-  function handleSubmit(e) {
-    e.preventDefault();
-    var email = document.getElementById('emailInput').value;
-    var btn = document.getElementById('submitBtn');
-    btn.textContent = 'Joining...';
-    btn.disabled = true;
-    fetch('https://formspree.io/f/maqpewpl', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email })
-    }).then(function() {
-      document.getElementById('waitlistForm').style.display = 'none';
-      document.getElementById('successMsg').style.display = 'block';
-      document.querySelector('.hero-note').textContent = 'Free plan forever \\u00B7 No credit card';
-    });
-  }
-
-  function handleSubmit2(e) {
-    e.preventDefault();
-    var btn = e.target.querySelector('button');
-    var email = document.getElementById('emailInput2').value;
-    btn.textContent = 'Joining...';
-    btn.disabled = true;
-    fetch('https://formspree.io/f/maqpewpl', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: email })
-    }).then(function() {
-      document.getElementById('waitlistForm2').style.display = 'none';
-      document.getElementById('successMsg2').style.display = 'block';
-    });
-  }
-</script>
 
 </body>
 </html>`;
+}
 
-    return new Response(html, {
-      headers: {
-        'content-type': 'text/html; charset=UTF-8',
-        'cache-control': 'public, max-age=3600',
-      },
-    });
-  },
-};
+function privacyHTML() {
+  return \`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — StockBridge</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'DM Sans', system-ui, sans-serif; max-width: 720px; margin: 0 auto; padding: 40px 24px; color: #1C1917; line-height: 1.7; }
+    h1 { font-size: 28px; margin-bottom: 8px; }
+    h2 { font-size: 20px; margin-top: 32px; margin-bottom: 12px; }
+    p, li { font-size: 15px; color: #57534E; }
+    a { color: #059669; }
+    .back { display: inline-block; margin-bottom: 24px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <a href="/" class="back">\u2190 Back to StockBridge</a>
+  <h1>Privacy Policy</h1>
+  <p style="color:#A8A29E;font-size:14px">Last updated: April 2026</p>
+
+  <h2>1. Information We Collect</h2>
+  <p>StockBridge collects the following data when you install our Shopify app:</p>
+  <p>Store domain, store owner email (for notifications), inventory data (quantities, SKUs, barcodes), Shopify API access tokens (encrypted), and sync activity logs.</p>
+
+  <h2>2. How We Use Your Data</h2>
+  <p>We use your data solely to provide inventory synchronization between your connected Shopify stores, send notification emails about sync status, and improve our service.</p>
+
+  <h2>3. Data Storage and Security</h2>
+  <p>Your data is stored in PostgreSQL databases hosted on Railway. API access tokens are stored securely. We use HTTPS for all data transmission.</p>
+
+  <h2>4. Data Sharing</h2>
+  <p>We do not sell, rent, or share your data with third parties. Your inventory data is only shared between your own connected Shopify stores as configured by you.</p>
+
+  <h2>5. Data Retention</h2>
+  <p>We retain your data while your app is installed. When you uninstall StockBridge, we process Shopify's shop/redact webhook and delete all your store data within 48 hours.</p>
+
+  <h2>6. Your Rights</h2>
+  <p>You can request access to, correction of, or deletion of your data at any time by emailing support@stockbridgeapp.com. We respond to all requests within 30 days.</p>
+
+  <h2>7. GDPR Compliance</h2>
+  <p>StockBridge complies with GDPR requirements. We process customer data requests and redaction requests via Shopify's mandatory compliance webhooks.</p>
+
+  <h2>8. Contact</h2>
+  <p>For privacy questions: <a href="mailto:support@stockbridgeapp.com">support@stockbridgeapp.com</a></p>
+
+  <hr style="margin:40px 0;border:none;border-top:1px solid #E7E5E4">
+  <p style="color:#A8A29E;font-size:13px">\u00A9 2026 StockBridge. All rights reserved.</p>
+</body>
+</html>\`;
+}
+
+function termsHTML() {
+  return \`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service — StockBridge</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'DM Sans', system-ui, sans-serif; max-width: 720px; margin: 0 auto; padding: 40px 24px; color: #1C1917; line-height: 1.7; }
+    h1 { font-size: 28px; margin-bottom: 8px; }
+    h2 { font-size: 20px; margin-top: 32px; margin-bottom: 12px; }
+    p, li { font-size: 15px; color: #57534E; }
+    a { color: #059669; }
+    .back { display: inline-block; margin-bottom: 24px; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <a href="/" class="back">\u2190 Back to StockBridge</a>
+  <h1>Terms of Service</h1>
+  <p style="color:#A8A29E;font-size:14px">Last updated: April 2026</p>
+
+  <h2>1. Acceptance of Terms</h2>
+  <p>By installing and using StockBridge, you agree to these Terms of Service. If you do not agree, please uninstall the app.</p>
+
+  <h2>2. Description of Service</h2>
+  <p>StockBridge is a Shopify application that synchronizes inventory data between connected Shopify stores. We provide real-time and scheduled inventory sync, SKU mapping, and related features.</p>
+
+  <h2>3. Account and Access</h2>
+  <p>You must have an active Shopify store to use StockBridge. You are responsible for maintaining the security of your Shopify account and API access.</p>
+
+  <h2>4. Billing</h2>
+  <p>StockBridge offers free and paid plans. All billing is processed through the Shopify Billing API. You can cancel or change your plan at any time through the app. Only the source (primary) store is billed; destination stores are always free.</p>
+
+  <h2>5. Data and Privacy</h2>
+  <p>Your use of StockBridge is also governed by our <a href="/privacy">Privacy Policy</a>. We access only the Shopify data necessary to provide our sync service.</p>
+
+  <h2>6. Limitation of Liability</h2>
+  <p>StockBridge is provided "as is." While we strive for reliable inventory sync, we are not liable for any losses resulting from sync delays, inaccuracies, or service interruptions. We recommend maintaining your own inventory records as a backup.</p>
+
+  <h2>7. Termination</h2>
+  <p>You may stop using StockBridge at any time by uninstalling the app. We may terminate or suspend access for violations of these terms or Shopify's terms of service.</p>
+
+  <h2>8. Changes to Terms</h2>
+  <p>We may update these terms from time to time. Continued use of StockBridge after changes constitutes acceptance of the new terms.</p>
+
+  <h2>9. Contact</h2>
+  <p>Questions about these terms: <a href="mailto:support@stockbridgeapp.com">support@stockbridgeapp.com</a></p>
+
+  <hr style="margin:40px 0;border:none;border-top:1px solid #E7E5E4">
+  <p style="color:#A8A29E;font-size:13px">\u00A9 2026 StockBridge. All rights reserved.</p>
+</body>
+</html>\`;
+}
