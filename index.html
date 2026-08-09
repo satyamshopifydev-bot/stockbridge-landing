@@ -293,7 +293,7 @@
     /* STATS BAR */
     .stats-bar {
       margin-top: 72px;
-      display: grid; grid-template-columns: repeat(4, 1fr);
+      display: grid; grid-template-columns: repeat(3, 1fr);
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
@@ -567,8 +567,7 @@
     </div>
     <div class="stats-bar">
       <div class="stat-item"><div class="stat-num">&lt;10s</div><div class="stat-label">Sync Speed</div></div>
-      <div class="stat-item"><div class="stat-num">11K+</div><div class="stat-label">SKUs Synced</div></div>
-      <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Pricing Plans</div></div>
+      <div class="stat-item"><div class="stat-num">14 days</div><div class="stat-label">Free Trial</div></div>
       <div class="stat-item"><div class="stat-num">Free</div><div class="stat-label">Destination Stores</div></div>
     </div>
   </div>
@@ -617,32 +616,32 @@
     </div>
     <div class="features">
       <div class="feature">
-        <div class="feature-icon">&#9889;</div>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8z"/></svg></div>
         <h3>Real-Time Webhook Sync</h3>
         <p>Inventory updates propagate within seconds via Shopify webhooks. No polling delays or hourly batch jobs on paid plans.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon">&#128269;</div>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
         <h3>Smart SKU Matching</h3>
         <p>Automatically maps products across stores by barcode or SKU. Handles thousands of products with paginated scanning.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon">&#128260;</div>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h13l-3-3"/><path d="M21 17H8l3 3"/></svg></div>
         <h3>Bidirectional Sync</h3>
         <p>Changes on any connected store sync to all others. Built-in echo prevention stops infinite sync loops.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon">&#128203;</div>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10"/><path d="M4 12h16"/><path d="M4 18h7"/></svg></div>
         <h3>Custom Sync Rules</h3>
         <p>Set buffer stock, percentage sync, one-way direction, or skip specific products. Rules are evaluated by priority.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon">&#128200;</div>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="m5 15 4-5 4 3 6-8"/></svg></div>
         <h3>Drift Analytics</h3>
         <p>Monitor inventory discrepancies across stores. Catch drift before it causes oversells or stockouts.</p>
       </div>
       <div class="feature">
-        <div class="feature-icon">&#128221;</div>
+        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg></div>
         <h3>Full Activity Log</h3>
         <p>Complete audit trail of every sync event. See what changed, when, and between which stores.</p>
       </div>
@@ -783,7 +782,7 @@
       <!-- Contact Form -->
       <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px">
         <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">Send us a message</h3>
-        <form action="https://formsubmit.co/satyam.shopifydev@gmail.com" method="POST" style="display:flex;flex-direction:column;gap:16px">
+        <form action="https://formsubmit.co/support@stockbridgeapp.com" method="POST" style="display:flex;flex-direction:column;gap:16px">
           <input type="hidden" name="_subject" value="StockBridge Website Contact">
           <input type="hidden" name="_captcha" value="false">
           <input type="hidden" name="_next" value="https://stockbridgeapp.com">
@@ -882,8 +881,8 @@
       <div class="copy">&copy; 2026 StockBridge &middot; Indore, India &middot; Not affiliated with Shopify Inc.</div>
       <div class="f-links">
         <a href="mailto:support@stockbridgeapp.com">support@stockbridgeapp.com</a>
-        <a href="https://app.stockbridgeapp.com/privacy">Privacy</a>
-        <a href="https://app.stockbridgeapp.com/terms">Terms</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
       </div>
     </div>
   </div>
