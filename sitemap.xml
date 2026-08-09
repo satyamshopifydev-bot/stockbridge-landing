@@ -11,14 +11,14 @@
        A sitemap listing 404 URLs hurts more than it helps.
 
   <url>
-    <loc>https://stockbridgeapp.com/privacy.html</loc>
+    <loc>https://stockbridgeapp.com/privacy</loc>
     <lastmod>2026-08-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://stockbridgeapp.com/terms.html</loc>
+    <loc>https://stockbridgeapp.com/terms</loc>
     <lastmod>2026-08-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
