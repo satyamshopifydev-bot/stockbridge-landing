@@ -9,6 +9,148 @@
   <meta property="og:description" content="Keep inventory perfectly synchronized across all your Shopify stores. Real-time sync, auto-detection, free plan available.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://stockbridgeapp.com">
+  <meta property="og:image" content="https://stockbridgeapp.com/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="StockBridge">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="StockBridge — Multi-Store Inventory Sync for Shopify">
+  <meta name="twitter:description" content="Keep inventory perfectly synchronized across all your Shopify stores. Real-time sync, auto-detection by SKU or barcode.">
+  <meta name="twitter:image" content="https://stockbridgeapp.com/og-image.png">
+  <link rel="canonical" href="https://stockbridgeapp.com/">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://stockbridgeapp.com/#app",
+        "name": "StockBridge",
+        "alternateName": "StockBridge — Multi-Store Inventory Sync",
+        "applicationCategory": "BusinessApplication",
+        "applicationSubCategory": "Inventory Management",
+        "operatingSystem": "Web-based, runs inside Shopify Admin",
+        "url": "https://stockbridgeapp.com/",
+        "installUrl": "https://apps.shopify.com/stockbridge-2",
+        "downloadUrl": "https://apps.shopify.com/stockbridge-2",
+        "description": "StockBridge keeps inventory synchronized across multiple Shopify stores in real time. When a product sells on one store, stock updates on every connected store within seconds. Products are matched automatically by SKU or barcode.",
+        "featureList": [
+          "Real-time inventory sync via Shopify webhooks",
+          "Automatic product matching by SKU or barcode",
+          "Bidirectional and one-way sync direction control",
+          "Custom sync rules per connection",
+          "Inventory drift detection and reconciliation",
+          "Full activity log of every sync event"
+        ],
+        "publisher": { "@id": "https://stockbridgeapp.com/#org" },
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Free",
+            "price": "0",
+            "priceCurrency": "USD",
+            "description": "50 SKUs, 2 stores, one-way sync. Free forever, no credit card required.",
+            "url": "https://apps.shopify.com/stockbridge-2"
+          },
+          {
+            "@type": "Offer",
+            "name": "Starter",
+            "price": "9.99",
+            "priceCurrency": "USD",
+            "description": "500 SKUs, 2 stores, bidirectional sync. Billed monthly.",
+            "url": "https://apps.shopify.com/stockbridge-2"
+          },
+          {
+            "@type": "Offer",
+            "name": "Growth",
+            "price": "34.99",
+            "priceCurrency": "USD",
+            "description": "5,000 SKUs, 5 stores, drift analytics and unlimited sync rules. Billed monthly.",
+            "url": "https://apps.shopify.com/stockbridge-2"
+          },
+          {
+            "@type": "Offer",
+            "name": "Business",
+            "price": "79.99",
+            "priceCurrency": "USD",
+            "description": "20,000 SKUs, 10 stores, API access and advanced rules. Billed monthly.",
+            "url": "https://apps.shopify.com/stockbridge-2"
+          }
+        ]
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://stockbridgeapp.com/#org",
+        "name": "SS Ecommerce Solutions",
+        "url": "https://stockbridgeapp.com/",
+        "email": "support@stockbridgeapp.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Indore",
+          "addressRegion": "Madhya Pradesh",
+          "addressCountry": "IN"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://stockbridgeapp.com/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "How does StockBridge sync inventory?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "StockBridge uses Shopify webhooks to detect inventory changes in real time. When a product sells or is restocked on one store, the webhook fires and StockBridge updates all connected stores within seconds."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do both stores need to pay?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Only the source store pays for the plan. Destination stores install StockBridge free and inherit all features from the source store's plan."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How are products matched between stores?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "StockBridge auto-detects matching products by scanning barcodes and SKUs across both stores. Products with matching barcodes or exact SKU matches are paired automatically. Products can also be mapped manually."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens if both stores sell at the same time?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "StockBridge includes echo prevention to avoid infinite sync loops. When a sync update is made by StockBridge, it recognises the change and prevents re-syncing it back."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I sync more than 2 Shopify stores?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Growth supports 5 stores and Business supports 10. All connected stores sync with each other automatically."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is there a free plan?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. The Free plan includes 50 SKUs, 2 stores and one-way sync. It is available forever with no credit card required."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
   <link rel="icon" href="https://app.stockbridgeapp.com/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
