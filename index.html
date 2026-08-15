@@ -151,7 +151,8 @@
   }
   </script>
 
-  <link rel="icon" href="https://app.stockbridgeapp.com/favicon.ico">
+  <link rel="icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -206,10 +207,7 @@
     }
     .logo-mark {
       width: 34px; height: 34px; border-radius: 10px;
-      background: linear-gradient(135deg, #10B981, #059669);
-      display: flex; align-items: center; justify-content: center;
-      color: white; font-weight: 800; font-size: 14px; font-family: var(--mono);
-      box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+      display: block; object-fit: contain;
     }
     .nav-links {
       display: flex; align-items: center; gap: 28px;
@@ -540,7 +538,7 @@
 <nav>
   <div class="container">
     <a href="/" class="logo" style="text-decoration:none">
-      <div class="logo-mark">SB</div>
+      <img class="logo-mark" src="logo.png" alt="StockBridge" width="34" height="34">
       StockBridge
     </a>
     <div class="nav-links">
@@ -867,7 +865,7 @@
   <div class="container" style="flex-direction:column;gap:20px">
     <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;width:100%">
       <a href="/" class="logo" style="text-decoration:none">
-        <div class="logo-mark">SB</div>
+        <img class="logo-mark" src="logo.png" alt="StockBridge" width="34" height="34">
         StockBridge
       </a>
       <div class="f-links">
