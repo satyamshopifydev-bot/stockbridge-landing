@@ -44,6 +44,14 @@ The existing FormSubmit endpoint is preserved. The form has associated labels, b
 
 ## Publish and SEO verification
 
+Cloudflare Workers uses `wrangler.jsonc` to serve this repository as a static-assets-only site. No Worker script or build command is required. `.assetsignore` publishes only the website files, excluding Git metadata, deployment configuration, README, and review screenshots. When adding a new root-level public file, also allow it in `.assetsignore`.
+
+The observed Cloudflare branch-preview settings are an empty build command, root directory `/`, and `npx wrangler versions upload`. Keep that preview command; a version upload creates a version without switching production traffic. The production command should be `npx wrangler deploy` after the design is approved and merged. The configured automatic HTML handling serves `/privacy` and `/terms` without extensions and the directory-based guide URLs with trailing slashes. Unknown URLs return the custom 404 page with HTTP 404.
+
+The reported `Missing entry-point to Worker script or to assets directory` error came from running Wrangler without a script or an explicit static-asset directory. The checked-in configuration supplies that directory. Verify that the connected Cloudflare check succeeds before merging.
+
+Wrangler 4.149.0's deployment dry-run passed. All 29 local Cloudflare HTTP checks passed, covering the seven canonical pages, HTML redirects, public assets, the custom HTTP 404, and excluded repository files. See [Cloudflare routing validation](docs/cloudflare-validation.json); these local checks do not establish live-domain deployment status.
+
 1. Review the branch preview on desktop and mobile, then merge through a pull request. Publish only this landing repository through its existing static host.
 2. Confirm HTTP 200 and canonical URLs for all seven sitemap pages. Check the custom HTTP 404 response, `robots.txt`, `sitemap.xml`, share image, font, and install links on the real domain. If the host supports both `www` and apex URLs, use one canonical host and redirect the alternate.
 3. In the site's verified Google Search Console property, submit `https://stockbridgeapp.com/sitemap.xml` and use URL Inspection on the homepage and the three new guides. Indexing and ranking are Google decisions; a sitemap or structured data is not a ranking guarantee.
