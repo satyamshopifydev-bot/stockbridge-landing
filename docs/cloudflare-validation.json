@@ -1,0 +1,152 @@
+{
+  "testedAt": "2026-10-09T04:01:04.222Z",
+  "environment": "Local Cloudflare Wrangler 4.149.0, static-assets-only configuration",
+  "harnessNote": "The execution environment cannot enumerate network interfaces; a test-only loopback-interface fallback was used. Website files and Wrangler asset/routing behavior were unchanged.",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "canonical": true
+    },
+    {
+      "path": "/privacy",
+      "status": 200,
+      "canonical": true
+    },
+    {
+      "path": "/terms",
+      "status": 200,
+      "canonical": true
+    },
+    {
+      "path": "/guides/",
+      "status": 200,
+      "canonical": true
+    },
+    {
+      "path": "/guides/sync-inventory-between-shopify-stores/",
+      "status": 200,
+      "canonical": true
+    },
+    {
+      "path": "/guides/sku-barcode-matching/",
+      "status": 200,
+      "canonical": true
+    },
+    {
+      "path": "/guides/available-vs-on-hand/",
+      "status": 200,
+      "canonical": true
+    },
+    {
+      "path": "/index.html",
+      "status": 307,
+      "redirect": "/"
+    },
+    {
+      "path": "/privacy.html",
+      "status": 307,
+      "redirect": "/privacy"
+    },
+    {
+      "path": "/privacy/",
+      "status": 307,
+      "redirect": "/privacy"
+    },
+    {
+      "path": "/terms.html",
+      "status": 307,
+      "redirect": "/terms"
+    },
+    {
+      "path": "/guides",
+      "status": 307,
+      "redirect": "/guides/"
+    },
+    {
+      "path": "/guides/sku-barcode-matching",
+      "status": 307,
+      "redirect": "/guides/sku-barcode-matching/"
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "contentType": "text/plain; charset=utf-8"
+    },
+    {
+      "path": "/sitemap.xml",
+      "status": 200,
+      "contentType": "application/xml"
+    },
+    {
+      "path": "/assets/site.css",
+      "status": 200,
+      "contentType": "text/css; charset=utf-8"
+    },
+    {
+      "path": "/assets/site.js",
+      "status": 200,
+      "contentType": "text/javascript; charset=utf-8"
+    },
+    {
+      "path": "/assets/fonts/manrope-latin.woff2",
+      "status": 200,
+      "contentType": "font/woff2"
+    },
+    {
+      "path": "/assets/stockbridge-social.png",
+      "status": 200,
+      "contentType": "image/png"
+    },
+    {
+      "path": "/logo.png",
+      "status": 200,
+      "contentType": "image/png"
+    },
+    {
+      "path": "/favicon.ico",
+      "status": 200,
+      "contentType": "image/vnd.microsoft.icon"
+    },
+    {
+      "path": "/nonexistent-test-page",
+      "status": 404,
+      "custom404": true
+    },
+    {
+      "path": "/README.md",
+      "status": 404,
+      "custom404": true
+    },
+    {
+      "path": "/wrangler.jsonc",
+      "status": 404,
+      "custom404": true
+    },
+    {
+      "path": "/docs/desktop-preview.png",
+      "status": 404,
+      "custom404": true
+    },
+    {
+      "path": "/docs/validation.json",
+      "status": 404,
+      "custom404": true
+    },
+    {
+      "path": "/.git/config",
+      "status": 404,
+      "custom404": true
+    },
+    {
+      "path": "/.assetsignore",
+      "status": 404,
+      "custom404": true
+    },
+    {
+      "path": "/.gitignore",
+      "status": 404,
+      "custom404": true
+    }
+  ]
+}

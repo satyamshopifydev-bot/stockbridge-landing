@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shopify SKU &amp; Barcode Matching Guide | StockBridge</title>
+    <meta
+      name="description"
+      content="Match Shopify product variants by SKU or barcode. Learn how to check duplicates, review size and color pairs, and avoid incorrect inventory mappings."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#16342d" />
+    <link
+      rel="canonical"
+      href="https://stockbridgeapp.com/guides/sku-barcode-matching/"
+    />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="StockBridge" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:title"
+      content="SKU and barcode matching: get the right variants connected | StockBridge"
+    />
+    <meta
+      property="og:description"
+      content="Match Shopify product variants by SKU or barcode. Learn how to check duplicates, review size and color pairs, and avoid incorrect inventory mappings."
+    />
+    <meta
+      property="og:url"
+      content="https://stockbridgeapp.com/guides/sku-barcode-matching/"
+    />
+    <meta
+      property="og:image"
+      content="https://stockbridgeapp.com/assets/stockbridge-social.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="StockBridge — Shopify inventory sync. More stores. Less busywork."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="SKU and barcode matching: get the right variants connected | StockBridge"
+    />
+    <meta
+      name="twitter:description"
+      content="Match Shopify product variants by SKU or barcode. Learn how to check duplicates, review size and color pairs, and avoid incorrect inventory mappings."
+    />
+    <meta
+      name="twitter:image"
+      content="https://stockbridgeapp.com/assets/stockbridge-social.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="StockBridge — inventory sync for Shopify stores"
+    />
+    <link
+      rel="preload"
+      href="/assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script src="/assets/site.js" defer></script>
+    <noscript
+      ><style>
+        @media (max-width: 700px) {
+          .site-header {
+            position: static;
+          }
+          .nav-wrap {
+            height: auto;
+            flex-wrap: wrap;
+            padding-block: 16px;
+          }
+          .menu-toggle {
+            display: none;
+          }
+          .nav-links {
+            display: flex;
+            position: static;
+            box-shadow: none;
+            border: 0;
+            padding: 0;
+            width: 100%;
+          }
+        }
+        .demo-controls {
+          display: none;
+        }
+      </style></noscript
+    >
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Article",
+            "headline": "SKU and barcode matching: get the right variants connected",
+            "description": "Match Shopify product variants by SKU or barcode. Learn how to check duplicates, review size and color pairs, and avoid incorrect inventory mappings.",
+            "mainEntityOfPage": "https://stockbridgeapp.com/guides/sku-barcode-matching/",
+            "url": "https://stockbridgeapp.com/guides/sku-barcode-matching/",
+            "datePublished": "2026-10-09",
+            "dateModified": "2026-10-09",
+            "author": {
+              "@type": "Organization",
+              "name": "Meridian Apps",
+              "url": "https://stockbridgeapp.com/"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Meridian Apps",
+              "url": "https://stockbridgeapp.com/",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://stockbridgeapp.com/logo.png"
+              }
+            },
+            "image": [
+              "https://stockbridgeapp.com/assets/stockbridge-social.png"
+            ],
+            "inLanguage": "en"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "StockBridge",
+                "item": "https://stockbridgeapp.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Guides",
+                "item": "https://stockbridgeapp.com/guides/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "SKU and barcode matching: get the right variants connected",
+                "item": "https://stockbridgeapp.com/guides/sku-barcode-matching/"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <svg
+      class="svg-library"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <symbol id="i-arrow" viewBox="0 0 24 24">
+          <path d="M5 12h14m-5-5 5 5-5 5" />
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 24 24">
+          <path d="m5 12 4 4L19 6" />
+        </symbol>
+        <symbol id="i-sync" viewBox="0 0 24 24">
+          <path d="M3 8h17m-4-4 4 4-4 4M21 16H4m4-4-4 4 4 4" />
+        </symbol>
+        <symbol id="i-store" viewBox="0 0 24 24">
+          <path
+            d="m4 8 2-5h12l2 5v3a3 3 0 0 1-5 2 3 3 0 0 1-6 0 3 3 0 0 1-5-2V8Zm1 6v7h14v-7M9 21v-6h6v6M4 8h16"
+          />
+        </symbol>
+        <symbol id="i-box" viewBox="0 0 24 24">
+          <path
+            d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 9 9-4M12 12 3 8m9 4v10M7 6l9 5"
+          />
+        </symbol>
+        <symbol id="i-bolt" viewBox="0 0 24 24">
+          <path d="m13 2-9 12h7l-1 8 10-13h-7l1-7Z" />
+        </symbol>
+        <symbol id="i-grid" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" />
+          <rect x="14" y="14" width="7" height="7" rx="1" />
+        </symbol>
+        <symbol id="i-link" viewBox="0 0 24 24">
+          <path
+            d="m9 15 6-6m-8 4-2 2a4 4 0 0 0 6 6l4-4a4 4 0 0 0 0-6m2 0 2-2a4 4 0 0 0-6-6L9 7a4 4 0 0 0 0 6"
+          />
+        </symbol>
+        <symbol id="i-barcode" viewBox="0 0 24 24">
+          <path d="M3 5v14M6 5v14M10 5v14M13 5v14M16 5v14M21 5v14M18 5v14" />
+        </symbol>
+        <symbol id="i-location" viewBox="0 0 24 24">
+          <path d="M19 10c0 5-7 12-7 12S5 15 5 10a7 7 0 1 1 14 0Z" />
+          <circle cx="12" cy="10" r="2.5" />
+        </symbol>
+        <symbol id="i-chart" viewBox="0 0 24 24">
+          <path d="M3 3v18h18M7 15l4-5 4 3 6-8" />
+        </symbol>
+        <symbol id="i-sliders" viewBox="0 0 24 24">
+          <path d="M6 3v3m0 6v9m6-18v10m0 6v2m6-18v3m0 6v9" />
+          <circle cx="6" cy="9" r="3" />
+          <circle cx="12" cy="16" r="3" />
+          <circle cx="18" cy="9" r="3" />
+        </symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 6v6l4 2" />
+        </symbol>
+        <symbol id="i-log" viewBox="0 0 24 24">
+          <rect x="5" y="3" width="14" height="18" rx="2" />
+          <path d="M9 7h6M9 12h6M9 17h4" />
+        </symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24">
+          <path d="m12 2 9 4v6c0 5-9 10-9 10S3 17 3 12V6l9-4Z" />
+          <path d="m8 11 3 3 5-5" />
+        </symbol>
+        <symbol id="i-mail" viewBox="0 0 24 24">
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="m3 6 9 7 9-7" />
+        </symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </symbol>
+        <symbol id="i-close" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M18 6 6 18" />
+        </symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24">
+          <rect x="5" y="10" width="14" height="11" rx="2" />
+          <path d="M8 10V6a4 4 0 0 1 8 0v4" />
+        </symbol>
+        <symbol id="i-book" viewBox="0 0 24 24">
+          <path
+            d="M12 5v16M12 5C9 3 5 3 2 4v16c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Z"
+          />
+        </symbol>
+      </defs>
+    </svg>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="/" aria-label="StockBridge home"
+          ><img src="/logo.png" alt="" width="34" height="34" /><span
+            class="brand-name"
+            >Stock<span>Bridge</span></span
+          ></a
+        >
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Open navigation"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <svg class="icon menu-icon" aria-hidden="true" focusable="false">
+            <use href="#i-menu"></use></svg
+          ><svg class="icon close-icon" aria-hidden="true" focusable="false">
+            <use href="#i-close"></use>
+          </svg>
+        </button>
+        <nav
+          class="nav-links"
+          id="primary-navigation"
+          aria-label="Main navigation"
+        >
+          <a href="/#how-it-works">How it works</a
+          ><a href="/#features">Features</a><a href="/#pricing">Pricing</a
+          ><a href="/guides/">Guides</a><a href="/#contact">Contact</a>
+          <a
+            class="button button-primary"
+            href="https://apps.shopify.com/stockbridge-2"
+            >Install on Shopify
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="#i-arrow"></use></svg
+          ></a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <div class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">StockBridge</a><span aria-hidden="true">/</span
+            ><a href="/guides/">Guides</a><span aria-hidden="true">/</span
+            ><span>Product mapping</span>
+          </div>
+          <span class="eyebrow">Product mapping</span>
+          <h1>SKU and barcode matching: get the right variants connected</h1>
+          <p>
+            Match the exact variant, handle duplicate identifiers, and review
+            product pairs before you sync.
+          </p>
+          <div class="article-meta">
+            <span>By Meridian Apps</span
+            ><span><time datetime="2026-10-09">October 9, 2026</time></span
+            ><span>5 min read</span>
+          </div>
+        </div>
+      </section>
+      <div class="container article-layout">
+        <aside class="article-toc" aria-label="On this page">
+          <strong>In this guide</strong>
+          <ul>
+            <li>
+              <a href="#variant-first">The variant is the inventory item</a>
+            </li>
+            <li>
+              <a href="#identifiers"
+                >Use consistent identifiers across stores</a
+              >
+            </li>
+            <li>
+              <a href="#duplicates"
+                >Treat duplicate identifiers as a review step</a
+              >
+            </li>
+            <li>
+              <a href="#connections"
+                >Different connections can reuse a variant</a
+              >
+            </li>
+            <li>
+              <a href="#review-checklist"
+                >A checklist before enabling a mapping</a
+              >
+            </li>
+          </ul>
+        </aside>
+        <article class="article-body">
+          <section aria-labelledby="variant-first">
+            <h2 id="variant-first">The variant is the inventory item</h2>
+            <p>
+              Good Shopify inventory mapping starts with the exact variant. Two
+              stores can use different product titles and still sell the same
+              item. Equally, two variants can share a product title while
+              representing different sizes, colors, or materials.
+            </p>
+            <p>
+              A product named “Everyday Tee” might have six variants. Matching
+              the title alone cannot tell you whether Small / Black belongs with
+              Small / Black or Large / Navy. SKU and barcode identifiers are
+              useful because they can identify the specific variant across your
+              stores.
+            </p>
+          </section>
+          <section aria-labelledby="identifiers">
+            <h2 id="identifiers">Use consistent identifiers across stores</h2>
+            <p>
+              StockBridge can find matching variants by SKU or barcode. Decide
+              which identifier your team maintains consistently, then check the
+              actual values in both Shopify catalogs. For a normal one-to-one
+              setup, one source variant should correspond to the intended
+              destination variant.
+            </p>
+            <div class="article-table-wrap">
+              <table class="article-table">
+                <thead>
+                  <tr>
+                    <th>Example pair</th>
+                    <th>What to check</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>TEE-BLK-S → TEE-BLK-S</td>
+                    <td>
+                      Same item, black color, small size. Confirm the barcode
+                      and options too.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>TEE-BLK-S → TEE-BLK-L</td>
+                    <td>
+                      Different size. A similar title does not make this a valid
+                      inventory pair.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>One SKU on several variants</td>
+                    <td>
+                      Ambiguous identity. Review every candidate rather than
+                      selecting the first match.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>No SKU or barcode</td>
+                    <td>
+                      Auto-detection has no useful identifier to compare. Add an
+                      identifier or review a manual mapping.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Keep an identifier consistent in spelling and format across
+              stores. If a result does not look right, inspect the stored SKU
+              and barcode rather than relying on what a product title suggests.
+            </p>
+          </section>
+          <section aria-labelledby="duplicates">
+            <h2 id="duplicates">
+              Treat duplicate identifiers as a review step
+            </h2>
+            <p>
+              A repeated SKU or barcode can point to more than one destination
+              variant. That might be intentional in your catalog, or it might be
+              a data-entry issue. Either way, it does not tell the app which
+              inventory relationship your business wants.
+            </p>
+            <p>
+              The “Allow duplicate SKUs” option is relevant to automatic
+              matching. Use it only when you understand why the identifier is
+              repeated and have reviewed the pairs it creates. It is not a
+              setting that automatically makes all duplicate variants represent
+              the same physical stock.
+            </p>
+            <div class="article-callout">
+              <p>
+                <strong>Review both sides.</strong> For bidirectional sync, ask
+                which variant is allowed to change the other variant’s Available
+                quantity. Multiple writers targeting the same inventory item can
+                make the intended outcome unclear.
+              </p>
+            </div>
+          </section>
+          <section aria-labelledby="connections">
+            <h2 id="connections">Different connections can reuse a variant</h2>
+            <p>
+              A product can be involved in separate store connections. For
+              example, Retail ↔ Wholesale and Retail → Regional are different
+              relationships, so reusing the retail variant is not automatically
+              a duplicate error.
+            </p>
+            <p>
+              Review each connection independently, and then review the network
+              as a whole. Record the direction, variant pairs, and mapped
+              locations for each relationship. Avoid assuming that a setting or
+              mapping in one connection also controls another.
+            </p>
+          </section>
+          <section aria-labelledby="review-checklist">
+            <h2 id="review-checklist">A checklist before enabling a mapping</h2>
+            <ol>
+              <li>
+                <strong>Confirm the connection.</strong> Check which source and
+                destination stores are selected.
+              </li>
+              <li>
+                <strong>Check the variant options.</strong> Compare size, color,
+                material, and any other option that changes the item.
+              </li>
+              <li>
+                <strong>Compare identifiers.</strong> Check the SKU and barcode
+                in both Shopify admins.
+              </li>
+              <li>
+                <strong>Review all candidates.</strong> Investigate repeated
+                identifiers or several variants pointing at one inventory item.
+              </li>
+              <li>
+                <strong>Confirm location and direction.</strong> Product
+                identity alone does not establish the warehouse or the stock
+                owner.
+              </li>
+              <li>
+                <strong>Verify a real update.</strong> Compare Available
+                quantities and inspect the Activity Log for that exact pair.
+              </li>
+            </ol>
+            <p>
+              If a mapping is wrong or cannot be edited, send support the
+              connection, source and destination variant IDs, SKUs, and a
+              screenshot of the error. Do not create extra mappings to work
+              around an incorrect pair; that can make the relationship harder to
+              trace.
+            </p>
+          </section>
+          <div class="article-cta">
+            <h2>Connect the inventory that belongs together.</h2>
+            <p>
+              Start with a free plan, review your product matches, and choose
+              the sync setup that fits your stores.
+            </p>
+            <a
+              class="button button-lime"
+              href="https://apps.shopify.com/stockbridge-2"
+              >Install StockBridge
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="#i-arrow"></use></svg
+            ></a>
+          </div>
+        </article>
+      </div>
+      <section class="related-guides">
+        <div class="container">
+          <h2>Keep exploring</h2>
+          <div class="guide-grid">
+            <a
+              class="guide-card"
+              href="/guides/sync-inventory-between-shopify-stores/"
+              ><div class="guide-art" aria-hidden="true">
+                <span class="art-symbol"
+                  ><svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-sync"></use></svg
+                ></span>
+              </div>
+              <div class="guide-card-body">
+                <span>Getting started · 6 min read</span>
+                <h3>Connect your stores with a clear setup plan</h3>
+                <p>
+                  A practical setup checklist for stores, variants, sync
+                  direction, and the first inventory check.
+                </p>
+                <span class="text-link"
+                  >Read the guide
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-arrow"></use></svg
+                ></span></div></a
+            ><a class="guide-card" href="/guides/available-vs-on-hand/"
+              ><div class="guide-art art-states" aria-hidden="true">
+                <span class="art-symbol"
+                  ><svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-box"></use></svg
+                ></span>
+              </div>
+              <div class="guide-card-body">
+                <span>Inventory basics · 5 min read</span>
+                <h3>Understand the quantity you are syncing</h3>
+                <p>
+                  Why sellable stock and physical stock can differ—and which
+                  quantity StockBridge currently syncs.
+                </p>
+                <span class="text-link"
+                  >Read the guide
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-arrow"></use></svg
+                ></span></div
+            ></a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a class="brand" href="/"
+              ><img src="/logo.png" alt="" width="34" height="34" /><span
+                class="brand-name"
+                >Stock<span>Bridge</span></span
+              ></a
+            >
+            <p>
+              Inventory sync for Shopify merchants with more than one store.
+              Built by Meridian Apps.
+            </p>
+          </div>
+          <div class="footer-column">
+            <h2>Product</h2>
+            <ul>
+              <li><a href="/#features">Features</a></li>
+              <li><a href="/#how-it-works">How it works</a></li>
+              <li><a href="/#pricing">Plans &amp; pricing</a></li>
+              <li>
+                <a href="https://apps.shopify.com/stockbridge-2"
+                  >Shopify App Store</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h2>Resources</h2>
+            <ul>
+              <li><a href="/guides/">Inventory sync guides</a></li>
+              <li>
+                <a href="/guides/sku-barcode-matching/"
+                  >SKU &amp; barcode matching</a
+                >
+              </li>
+              <li>
+                <a href="/guides/available-vs-on-hand/"
+                  >Available vs. On hand</a
+                >
+              </li>
+              <li><a href="/#faq">Frequently asked questions</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h2>Get in touch</h2>
+            <ul>
+              <li>
+                <a href="mailto:support@stockbridgeapp.com">Email support</a>
+              </li>
+              <li><a href="/#contact">Contact us</a></li>
+              <li><a href="/privacy">Privacy policy</a></li>
+              <li><a href="/terms">Terms of service</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 StockBridge. Indore, India.</span
+          ><span
+            >StockBridge is an independent app and is not affiliated with or
+            endorsed by Shopify Inc.</span
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

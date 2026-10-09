@@ -1,890 +1,1405 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StockBridge — Multi-Store Inventory Sync for Shopify</title>
-  <meta name="description" content="Automatically sync inventory across your Shopify stores in real-time. Auto-detect product matches by SKU or barcode. Free plan available.">
-  <meta property="og:title" content="StockBridge — Multi-Store Inventory Sync for Shopify">
-  <meta property="og:description" content="Keep inventory perfectly synchronized across all your Shopify stores. Real-time sync, auto-detection, free plan available.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://stockbridgeapp.com">
-  <meta property="og:image" content="https://stockbridgeapp.com/og-image.png">
-  <meta property="og:image:width" content="1600">
-  <meta property="og:image:height" content="900">
-  <meta property="og:site_name" content="StockBridge">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="StockBridge — Multi-Store Inventory Sync for Shopify">
-  <meta name="twitter:description" content="Keep inventory perfectly synchronized across all your Shopify stores. Real-time sync, auto-detection by SKU or barcode.">
-  <meta name="twitter:image" content="https://stockbridgeapp.com/og-image.png">
-  <link rel="canonical" href="https://stockbridgeapp.com/">
-  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "SoftwareApplication",
-        "@id": "https://stockbridgeapp.com/#app",
-        "name": "StockBridge",
-        "alternateName": "StockBridge — Multi-Store Inventory Sync",
-        "applicationCategory": "BusinessApplication",
-        "applicationSubCategory": "Inventory Management",
-        "operatingSystem": "Web-based, runs inside Shopify Admin",
-        "url": "https://stockbridgeapp.com/",
-        "installUrl": "https://apps.shopify.com/stockbridge-2",
-        "downloadUrl": "https://apps.shopify.com/stockbridge-2",
-        "description": "StockBridge keeps inventory synchronized across multiple Shopify stores in real time. When a product sells on one store, stock updates on every connected store within seconds. Products are matched automatically by SKU or barcode.",
-        "featureList": [
-          "Real-time inventory sync via Shopify webhooks",
-          "Automatic product matching by SKU or barcode",
-          "Bidirectional and one-way sync direction control",
-          "Custom sync rules per connection",
-          "Inventory drift detection and reconciliation",
-          "Full activity log of every sync event"
-        ],
-        "publisher": { "@id": "https://stockbridgeapp.com/#org" },
-        "offers": [
-          {
-            "@type": "Offer",
-            "name": "Free",
-            "price": "0",
-            "priceCurrency": "USD",
-            "description": "50 SKUs, 2 stores, one-way sync. Free forever, no credit card required.",
-            "url": "https://apps.shopify.com/stockbridge-2"
-          },
-          {
-            "@type": "Offer",
-            "name": "Starter",
-            "price": "9.99",
-            "priceCurrency": "USD",
-            "description": "500 SKUs, 2 stores, bidirectional sync. Billed monthly.",
-            "url": "https://apps.shopify.com/stockbridge-2"
-          },
-          {
-            "@type": "Offer",
-            "name": "Growth",
-            "price": "34.99",
-            "priceCurrency": "USD",
-            "description": "5,000 SKUs, 5 stores, drift analytics and unlimited sync rules. Billed monthly.",
-            "url": "https://apps.shopify.com/stockbridge-2"
-          },
-          {
-            "@type": "Offer",
-            "name": "Business",
-            "price": "79.99",
-            "priceCurrency": "USD",
-            "description": "20,000 SKUs, 10 stores, API access and advanced rules. Billed monthly.",
-            "url": "https://apps.shopify.com/stockbridge-2"
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shopify Inventory Sync for Multiple Stores | StockBridge</title>
+    <meta
+      name="description"
+      content="Sync inventory between Shopify stores with StockBridge. Match SKUs and barcodes, choose one-way or two-way sync, and start free. Paid plans from $9.99/month."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#16342d" />
+    <link rel="canonical" href="https://stockbridgeapp.com/" />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="StockBridge" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:title"
+      content="Shopify Inventory Sync for Multiple Stores | StockBridge"
+    />
+    <meta
+      property="og:description"
+      content="Sync inventory between Shopify stores with StockBridge. Match SKUs and barcodes, choose one-way or two-way sync, and start free. Paid plans from $9.99/month."
+    />
+    <meta property="og:url" content="https://stockbridgeapp.com/" />
+    <meta
+      property="og:image"
+      content="https://stockbridgeapp.com/assets/stockbridge-social.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="StockBridge — Shopify inventory sync. More stores. Less busywork."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Shopify Inventory Sync for Multiple Stores | StockBridge"
+    />
+    <meta
+      name="twitter:description"
+      content="Sync inventory between Shopify stores with StockBridge. Match SKUs and barcodes, choose one-way or two-way sync, and start free. Paid plans from $9.99/month."
+    />
+    <meta
+      name="twitter:image"
+      content="https://stockbridgeapp.com/assets/stockbridge-social.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="StockBridge — inventory sync for Shopify stores"
+    />
+    <link
+      rel="preload"
+      href="/assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script src="/assets/site.js" defer></script>
+    <noscript
+      ><style>
+        @media (max-width: 700px) {
+          .site-header {
+            position: static;
           }
-        ]
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://stockbridgeapp.com/#org",
-        "name": "SS Ecommerce Solutions",
-        "url": "https://stockbridgeapp.com/",
-        "email": "support@stockbridgeapp.com",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Indore",
-          "addressRegion": "Madhya Pradesh",
-          "addressCountry": "IN"
+          .nav-wrap {
+            height: auto;
+            flex-wrap: wrap;
+            padding-block: 16px;
+          }
+          .menu-toggle {
+            display: none;
+          }
+          .nav-links {
+            display: flex;
+            position: static;
+            box-shadow: none;
+            border: 0;
+            padding: 0;
+            width: 100%;
+          }
         }
-      },
+        .demo-controls {
+          display: none;
+        }
+      </style></noscript
+    >
+    <script type="application/ld+json">
       {
-        "@type": "FAQPage",
-        "@id": "https://stockbridgeapp.com/#faq",
-        "mainEntity": [
+        "@context": "https://schema.org",
+        "@graph": [
           {
-            "@type": "Question",
-            "name": "How does StockBridge sync inventory?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "StockBridge uses Shopify webhooks to detect inventory changes in real time. When a product sells or is restocked on one store, the webhook fires and StockBridge updates all connected stores within seconds."
-            }
+            "@type": "Organization",
+            "@id": "https://stockbridgeapp.com/#organization",
+            "name": "Meridian Apps",
+            "url": "https://stockbridgeapp.com/",
+            "logo": "https://stockbridgeapp.com/logo.png",
+            "email": "support@stockbridgeapp.com"
           },
           {
-            "@type": "Question",
-            "name": "Do both stores need to pay?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "No. Only the source store pays for the plan. Destination stores install StockBridge free and inherit all features from the source store's plan."
-            }
+            "@type": "WebSite",
+            "@id": "https://stockbridgeapp.com/#website",
+            "name": "StockBridge",
+            "url": "https://stockbridgeapp.com/",
+            "publisher": {
+              "@id": "https://stockbridgeapp.com/#organization"
+            },
+            "inLanguage": "en"
           },
           {
-            "@type": "Question",
-            "name": "How are products matched between stores?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "StockBridge auto-detects matching products by scanning barcodes and SKUs across both stores. Products with matching barcodes or exact SKU matches are paired automatically. Products can also be mapped manually."
-            }
+            "@type": "WebPage",
+            "@id": "https://stockbridgeapp.com/#webpage",
+            "url": "https://stockbridgeapp.com/",
+            "name": "Shopify Inventory Sync for Multiple Stores | StockBridge",
+            "isPartOf": {
+              "@id": "https://stockbridgeapp.com/#website"
+            },
+            "about": {
+              "@id": "https://stockbridgeapp.com/#app"
+            },
+            "inLanguage": "en"
           },
           {
-            "@type": "Question",
-            "name": "What happens if both stores sell at the same time?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "StockBridge includes echo prevention to avoid infinite sync loops. When a sync update is made by StockBridge, it recognises the change and prevents re-syncing it back."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I sync more than 2 Shopify stores?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Growth supports 5 stores and Business supports 10. All connected stores sync with each other automatically."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Is there a free plan?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. The Free plan includes 50 SKUs, 2 stores and one-way sync. It is available forever with no credit card required."
-            }
+            "@type": "SoftwareApplication",
+            "@id": "https://stockbridgeapp.com/#app",
+            "name": "StockBridge",
+            "applicationCategory": "BusinessApplication",
+            "operatingSystem": "Web / Shopify",
+            "url": "https://stockbridgeapp.com/",
+            "installUrl": "https://apps.shopify.com/stockbridge-2",
+            "description": "Sync Available inventory between Shopify stores. Match variants by SKU or barcode and choose one-way or bidirectional sync according to your plan.",
+            "publisher": {
+              "@id": "https://stockbridgeapp.com/#organization"
+            },
+            "featureList": [
+              "Available inventory sync between Shopify stores",
+              "SKU and barcode product variant matching",
+              "One-way sync; bidirectional sync on paid plans",
+              "Activity logs and configurable sync rules",
+              "Multi-location mapping on Business"
+            ],
+            "offers": [
+              {
+                "@type": "Offer",
+                "name": "Free",
+                "price": "0",
+                "priceCurrency": "USD",
+                "url": "https://stockbridgeapp.com/#pricing",
+                "description": "2 stores, 50 SKUs per connection. Free forever."
+              },
+              {
+                "@type": "Offer",
+                "name": "Starter",
+                "price": "9.99",
+                "priceCurrency": "USD",
+                "url": "https://stockbridgeapp.com/#pricing",
+                "description": "2 stores, 500 SKUs per connection. USD / month."
+              },
+              {
+                "@type": "Offer",
+                "name": "Growth",
+                "price": "34.99",
+                "priceCurrency": "USD",
+                "url": "https://stockbridgeapp.com/#pricing",
+                "description": "5 stores, 5,000 SKUs per connection. USD / month."
+              },
+              {
+                "@type": "Offer",
+                "name": "Business",
+                "price": "79.99",
+                "priceCurrency": "USD",
+                "url": "https://stockbridgeapp.com/#pricing",
+                "description": "10 stores, 20,000 SKUs per connection. USD / month."
+              }
+            ],
+            "sameAs": ["https://apps.shopify.com/stockbridge-2"]
           }
         ]
       }
-    ]
-  }
-  </script>
-
-  <link rel="icon" href="favicon.ico">
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --bg: #0B0F1A;
-      --bg-card: #111827;
-      --surface: #1E293B;
-      --text: #F1F5F9;
-      --text-secondary: #94A3B8;
-      --text-muted: #64748B;
-      --accent: #10B981;
-      --accent-dark: #059669;
-      --accent-light: rgba(16, 185, 129, 0.1);
-      --border: rgba(148, 163, 184, 0.1);
-      --border-accent: rgba(16, 185, 129, 0.3);
-      --radius: 16px;
-      --radius-sm: 10px;
-      --font: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-      --mono: 'JetBrains Mono', monospace;
-    }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    a { color: var(--accent); text-decoration: none; transition: color 0.2s; }
-    a:hover { color: #34D399; }
-    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
-
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(11, 15, 26, 0.8);
-      backdrop-filter: blur(20px) saturate(180%);
-      border-bottom: 1px solid var(--border);
-    }
-    nav .container {
-      display: flex; align-items: center; justify-content: space-between;
-      height: 72px;
-    }
-    .logo {
-      display: flex; align-items: center; gap: 10px;
-      font-weight: 700; font-size: 19px; color: var(--text);
-    }
-    .logo-mark {
-      width: 34px; height: 34px; border-radius: 10px;
-      display: block; object-fit: contain;
-    }
-    .nav-links {
-      display: flex; align-items: center; gap: 28px;
-      font-size: 14px; font-weight: 500;
-    }
-    .nav-links a { color: var(--text-secondary); }
-    .nav-links a:hover { color: var(--text); text-decoration: none; }
-
-    /* MOBILE MENU */
-    .mobile-toggle {
-      display: none; background: none; border: none; cursor: pointer;
-      color: var(--text); font-size: 24px; padding: 4px;
-    }
-
-    /* BUTTONS */
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 11px 22px; border-radius: var(--radius-sm);
-      font-weight: 600; font-size: 14px; font-family: var(--font);
-      border: none; cursor: pointer; transition: all 0.25s; text-decoration: none;
-    }
-    .btn:hover { text-decoration: none; }
-    .btn-primary {
-      background: linear-gradient(135deg, #10B981, #059669);
-      color: white; box-shadow: 0 0 24px rgba(16,185,129,0.25);
-    }
-    .btn-primary:hover {
-      box-shadow: 0 0 36px rgba(16,185,129,0.4);
-      transform: translateY(-1px); color: white;
-    }
-    .btn-outline {
-      background: transparent; color: var(--text-secondary);
-      border: 1px solid var(--border);
-    }
-    .btn-outline:hover { border-color: var(--text-muted); color: var(--text); }
-    .btn-lg { padding: 14px 28px; font-size: 15px; border-radius: var(--radius); }
-
-    /* HERO */
-    .hero {
-      padding: 160px 0 100px;
-      text-align: center;
-      position: relative;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-      width: 800px; height: 600px;
-      background: radial-gradient(ellipse, rgba(16,185,129,0.08) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--accent-light);
-      border: 1px solid var(--border-accent);
-      color: var(--accent);
-      padding: 7px 16px; border-radius: 24px;
-      font-size: 13px; font-weight: 600;
-      margin-bottom: 28px;
-    }
-    .hero h1 {
-      font-size: clamp(36px, 5.5vw, 60px);
-      font-weight: 800; line-height: 1.1;
-      letter-spacing: -0.03em;
-      max-width: 760px; margin: 0 auto 24px;
-    }
-    .hero h1 em {
-      font-style: normal;
-      background: linear-gradient(135deg, #10B981, #34D399);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero-sub {
-      font-size: 18px; color: var(--text-secondary);
-      max-width: 540px; margin: 0 auto 36px;
-      line-height: 1.7;
-    }
-    .hero-cta {
-      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
-    }
-
-    /* STATS BAR */
-    .stats-bar {
-      margin-top: 72px;
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-    .stat-item {
-      padding: 28px 20px; text-align: center;
-      border-right: 1px solid var(--border);
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-num {
-      font-size: 26px; font-weight: 700; color: var(--accent);
-      font-family: var(--mono); margin-bottom: 4px;
-    }
-    .stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
-
-    /* SECTIONS */
-    section { padding: 100px 0; position: relative; }
-    section.alt {
-      background: var(--bg-card);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-    }
-    .section-label {
-      font-size: 12px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--accent);
-      margin-bottom: 12px;
-    }
-    .section-header { text-align: center; margin-bottom: 56px; }
-    .section-header h2 {
-      font-size: 36px; font-weight: 800; letter-spacing: -0.02em;
-      margin-bottom: 14px;
-    }
-    .section-header p {
-      font-size: 17px; color: var(--text-secondary);
-      max-width: 520px; margin: 0 auto;
-    }
-
-    /* STEPS */
-    .steps {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
-    }
-    .step {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 32px 24px;
-      transition: border-color 0.3s;
-    }
-    .step:hover { border-color: var(--border-accent); }
-    .step-num {
-      width: 40px; height: 40px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-      color: white;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 16px; font-family: var(--mono);
-      margin-bottom: 20px;
-    }
-    .step h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
-    .step p { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
-
-    /* FEATURES */
-    .features {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-    }
-    .feature {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 32px 28px;
-      transition: border-color 0.3s, box-shadow 0.3s;
-    }
-    .feature:hover {
-      border-color: var(--border-accent);
-      box-shadow: 0 0 40px rgba(16, 185, 129, 0.08);
-    }
-    .feature-icon {
-      width: 48px; height: 48px; border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 22px; margin-bottom: 20px;
-      background: var(--accent-light);
-      border: 1px solid var(--border-accent);
-    }
-    .feature h3 { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
-    .feature p { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
-
-    /* SOURCE-PAYS CALLOUT */
-    .callout {
-      background: var(--accent-light);
-      border: 1px solid var(--border-accent);
-      border-radius: var(--radius);
-      padding: 24px 32px;
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .callout p {
-      font-size: 15px; color: var(--accent); font-weight: 600;
-    }
-    .callout span { color: var(--text-secondary); font-weight: 400; }
-
-    /* PRICING */
-    .pricing-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
-    }
-    .plan {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 28px 22px;
-      display: flex; flex-direction: column;
-      transition: border-color 0.3s;
-    }
-    .plan:hover { border-color: var(--border-accent); }
-    .plan.pop {
-      border-color: var(--accent);
-      box-shadow: 0 0 40px rgba(16,185,129,0.1);
-      position: relative;
-    }
-    .plan.pop::before {
-      content: 'Popular';
-      position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
-      background: linear-gradient(135deg, #10B981, #059669);
-      color: white;
-      padding: 4px 14px; border-radius: 10px;
-      font-size: 11px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-    .plan-name {
-      font-size: 15px; font-weight: 700; margin-bottom: 8px;
-      color: var(--text-secondary);
-    }
-    .plan-price {
-      font-size: 30px; font-weight: 800; font-family: var(--mono);
-      margin-bottom: 2px;
-    }
-    .plan-price small {
-      font-size: 14px; font-weight: 400; color: var(--text-muted);
-    }
-    .plan-desc {
-      font-size: 12px; color: var(--text-muted); margin-bottom: 20px;
-    }
-    .plan-list { list-style: none; flex: 1; margin-bottom: 20px; }
-    .plan-list li {
-      font-size: 13px; color: var(--text-secondary);
-      padding: 5px 0; display: flex; align-items: center; gap: 8px;
-    }
-    .plan-list li::before {
-      content: '\2713'; color: var(--accent);
-      font-weight: 700; font-size: 12px;
-      width: 18px; height: 18px; border-radius: 50%;
-      background: var(--accent-light);
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-    }
-    .plan .btn {
-      width: 100%; justify-content: center;
-      font-size: 13px; padding: 10px 16px;
-    }
-
-    /* FAQ */
-    .faq-list { max-width: 680px; margin: 0 auto; }
-    .faq-item { border-bottom: 1px solid var(--border); }
-    .faq-q {
-      font-size: 15px; font-weight: 600; cursor: pointer;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 20px 0; color: var(--text);
-      user-select: none;
-    }
-    .faq-toggle {
-      width: 28px; height: 28px; border-radius: 50%;
-      background: var(--accent-light); border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; color: var(--text-muted);
-      transition: all 0.3s; flex-shrink: 0;
-    }
-    .faq-item.open .faq-toggle {
-      transform: rotate(45deg); color: var(--accent);
-      border-color: var(--border-accent);
-    }
-    .faq-a {
-      font-size: 14px; color: var(--text-secondary); line-height: 1.75;
-      max-height: 0; overflow: hidden;
-      transition: max-height 0.3s ease, padding-bottom 0.3s;
-      padding-bottom: 0;
-    }
-    .faq-item.open .faq-a { max-height: 300px; padding-bottom: 20px; }
-
-    /* CTA */
-    .cta-section { text-align: center; padding: 100px 0; }
-    .cta-section h2 {
-      font-size: 36px; font-weight: 800;
-      letter-spacing: -0.02em; margin-bottom: 14px;
-    }
-    .cta-section p {
-      font-size: 17px; color: var(--text-secondary); margin-bottom: 32px;
-    }
-
-    /* FOOTER */
-    footer { border-top: 1px solid var(--border); padding: 32px 0; }
-    footer .container {
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 16px;
-    }
-    footer .copy { font-size: 13px; color: var(--text-muted); }
-    footer .f-links { display: flex; gap: 24px; font-size: 13px; }
-    footer .f-links a { color: var(--text-secondary); }
-    footer .f-links a:hover { color: var(--accent); }
-
-    /* RESPONSIVE */
-    @media (max-width: 1024px) {
-      .pricing-grid { grid-template-columns: repeat(3, 1fr); }
-      .steps { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .mobile-toggle { display: block; }
-      .stats-bar { grid-template-columns: repeat(2, 1fr); }
-      .stat-item:nth-child(2) { border-right: none; }
-      .features { grid-template-columns: 1fr; }
-      .pricing-grid { grid-template-columns: 1fr; max-width: 360px; margin: 0 auto; }
-      .steps { grid-template-columns: 1fr; }
-      .hero-cta { flex-direction: column; align-items: center; }
-      .hero { padding: 120px 0 60px; }
-      section { padding: 64px 0; }
-      .section-header h2 { font-size: 28px; }
-      #contact .container > div { grid-template-columns: 1fr !important; }
-    }
-
-    /* ANIMATIONS */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .hero-badge, .hero h1, .hero-sub, .hero-cta, .stats-bar {
-      animation: fadeUp 0.6s ease-out both;
-    }
-    .hero h1 { animation-delay: 0.1s; }
-    .hero-sub { animation-delay: 0.2s; }
-    .hero-cta { animation-delay: 0.3s; }
-    .stats-bar { animation-delay: 0.4s; }
-    html { scroll-behavior: smooth; }
-  </style>
-</head>
-<body>
-
-<!-- NAV -->
-<nav>
-  <div class="container">
-    <a href="/" class="logo" style="text-decoration:none">
-      <img class="logo-mark" src="logo.png" alt="StockBridge" width="34" height="34">
-      StockBridge
-    </a>
-    <div class="nav-links">
-      <a href="#how-it-works">How It Works</a>
-      <a href="#features">Features</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contact">Contact</a>
-      <a href="https://apps.shopify.com/stockbridge-2" class="btn btn-primary">Install Free</a>
-    </div>
-    <button class="mobile-toggle" onclick="document.querySelector('.nav-links').style.display=document.querySelector('.nav-links').style.display==='flex'?'none':'flex'" aria-label="Menu">&#9776;</button>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="container">
-    <div class="hero-badge">&#10003; Free plan available &middot; No credit card required</div>
-    <h1>Sync inventory across all your <em>Shopify stores</em></h1>
-    <p class="hero-sub">When a product sells on one store, every connected store updates in seconds. Auto-detection, real-time sync, and a free plan that works.</p>
-    <div class="hero-cta">
-      <a href="https://apps.shopify.com/stockbridge-2" class="btn btn-primary btn-lg">Install on Shopify &rarr;</a>
-      <a href="#how-it-works" class="btn btn-outline btn-lg">See How It Works</a>
-    </div>
-    <div class="stats-bar">
-      <div class="stat-item"><div class="stat-num">&lt;10s</div><div class="stat-label">Sync Speed</div></div>
-      <div class="stat-item"><div class="stat-num">14 days</div><div class="stat-label">Free Trial</div></div>
-      <div class="stat-item"><div class="stat-num">Free</div><div class="stat-label">Destination Stores</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="alt" id="how-it-works">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">How It Works</div>
-      <h2>Up and running in 5 minutes</h2>
-      <p>No complex setup. No CSV imports. Connect your stores and let StockBridge handle the rest.</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3>Install on both stores</h3>
-        <p>Install StockBridge from the Shopify App Store on your source and destination stores.</p>
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <svg
+      class="svg-library"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <symbol id="i-arrow" viewBox="0 0 24 24">
+          <path d="M5 12h14m-5-5 5 5-5 5" />
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 24 24">
+          <path d="m5 12 4 4L19 6" />
+        </symbol>
+        <symbol id="i-sync" viewBox="0 0 24 24">
+          <path d="M3 8h17m-4-4 4 4-4 4M21 16H4m4-4-4 4 4 4" />
+        </symbol>
+        <symbol id="i-store" viewBox="0 0 24 24">
+          <path
+            d="m4 8 2-5h12l2 5v3a3 3 0 0 1-5 2 3 3 0 0 1-6 0 3 3 0 0 1-5-2V8Zm1 6v7h14v-7M9 21v-6h6v6M4 8h16"
+          />
+        </symbol>
+        <symbol id="i-box" viewBox="0 0 24 24">
+          <path
+            d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 9 9-4M12 12 3 8m9 4v10M7 6l9 5"
+          />
+        </symbol>
+        <symbol id="i-bolt" viewBox="0 0 24 24">
+          <path d="m13 2-9 12h7l-1 8 10-13h-7l1-7Z" />
+        </symbol>
+        <symbol id="i-grid" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" />
+          <rect x="14" y="14" width="7" height="7" rx="1" />
+        </symbol>
+        <symbol id="i-link" viewBox="0 0 24 24">
+          <path
+            d="m9 15 6-6m-8 4-2 2a4 4 0 0 0 6 6l4-4a4 4 0 0 0 0-6m2 0 2-2a4 4 0 0 0-6-6L9 7a4 4 0 0 0 0 6"
+          />
+        </symbol>
+        <symbol id="i-barcode" viewBox="0 0 24 24">
+          <path d="M3 5v14M6 5v14M10 5v14M13 5v14M16 5v14M21 5v14M18 5v14" />
+        </symbol>
+        <symbol id="i-location" viewBox="0 0 24 24">
+          <path d="M19 10c0 5-7 12-7 12S5 15 5 10a7 7 0 1 1 14 0Z" />
+          <circle cx="12" cy="10" r="2.5" />
+        </symbol>
+        <symbol id="i-chart" viewBox="0 0 24 24">
+          <path d="M3 3v18h18M7 15l4-5 4 3 6-8" />
+        </symbol>
+        <symbol id="i-sliders" viewBox="0 0 24 24">
+          <path d="M6 3v3m0 6v9m6-18v10m0 6v2m6-18v3m0 6v9" />
+          <circle cx="6" cy="9" r="3" />
+          <circle cx="12" cy="16" r="3" />
+          <circle cx="18" cy="9" r="3" />
+        </symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 6v6l4 2" />
+        </symbol>
+        <symbol id="i-log" viewBox="0 0 24 24">
+          <rect x="5" y="3" width="14" height="18" rx="2" />
+          <path d="M9 7h6M9 12h6M9 17h4" />
+        </symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24">
+          <path d="m12 2 9 4v6c0 5-9 10-9 10S3 17 3 12V6l9-4Z" />
+          <path d="m8 11 3 3 5-5" />
+        </symbol>
+        <symbol id="i-mail" viewBox="0 0 24 24">
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="m3 6 9 7 9-7" />
+        </symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </symbol>
+        <symbol id="i-close" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M18 6 6 18" />
+        </symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24">
+          <rect x="5" y="10" width="14" height="11" rx="2" />
+          <path d="M8 10V6a4 4 0 0 1 8 0v4" />
+        </symbol>
+        <symbol id="i-book" viewBox="0 0 24 24">
+          <path
+            d="M12 5v16M12 5C9 3 5 3 2 4v16c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Z"
+          />
+        </symbol>
+      </defs>
+    </svg>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="/" aria-label="StockBridge home"
+          ><img src="/logo.png" alt="" width="34" height="34" /><span
+            class="brand-name"
+            >Stock<span>Bridge</span></span
+          ></a
+        >
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Open navigation"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <svg class="icon menu-icon" aria-hidden="true" focusable="false">
+            <use href="#i-menu"></use></svg
+          ><svg class="icon close-icon" aria-hidden="true" focusable="false">
+            <use href="#i-close"></use>
+          </svg>
+        </button>
+        <nav
+          class="nav-links"
+          id="primary-navigation"
+          aria-label="Main navigation"
+        >
+          <a href="/#how-it-works">How it works</a
+          ><a href="/#features">Features</a><a href="/#pricing">Pricing</a
+          ><a href="/guides/">Guides</a><a href="/#contact">Contact</a>
+          <a
+            class="button button-primary"
+            href="https://apps.shopify.com/stockbridge-2"
+            >Install on Shopify
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="#i-arrow"></use></svg
+          ></a>
+        </nav>
       </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>Connect with an invite link</h3>
-        <p>Generate an invite link on your source store, paste it on the destination. One click to connect.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>Auto-detect matches</h3>
-        <p>StockBridge scans both stores and automatically matches products by SKU or barcode.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <h3>Sync runs automatically</h3>
-        <p>Every sale, restock, or adjustment on one store updates all connected stores in real-time.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section id="features">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">Features</div>
-      <h2>Built for multi-store merchants</h2>
-      <p>Everything you need to keep inventory synchronized across your Shopify stores.</p>
-    </div>
-    <div class="features">
-      <div class="feature">
-        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h8l-1 8 10-12h-8l1-8z"/></svg></div>
-        <h3>Real-Time Webhook Sync</h3>
-        <p>Inventory updates propagate within seconds via Shopify webhooks. No polling delays or hourly batch jobs on paid plans.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></div>
-        <h3>Smart SKU Matching</h3>
-        <p>Automatically maps products across stores by barcode or SKU. Handles thousands of products with paginated scanning.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h13l-3-3"/><path d="M21 17H8l3 3"/></svg></div>
-        <h3>Bidirectional Sync</h3>
-        <p>Changes on any connected store sync to all others. Built-in echo prevention stops infinite sync loops.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10"/><path d="M4 12h16"/><path d="M4 18h7"/></svg></div>
-        <h3>Custom Sync Rules</h3>
-        <p>Set buffer stock, percentage sync, one-way direction, or skip specific products. Rules are evaluated by priority.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 20h18"/><path d="m5 15 4-5 4 3 6-8"/></svg></div>
-        <h3>Drift Analytics</h3>
-        <p>Monitor inventory discrepancies across stores. Catch drift before it causes oversells or stockouts.</p>
-      </div>
-      <div class="feature">
-        <div class="feature-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/></svg></div>
-        <h3>Full Activity Log</h3>
-        <p>Complete audit trail of every sync event. See what changed, when, and between which stores.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="alt" id="pricing">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">Pricing</div>
-      <h2>Simple, transparent pricing</h2>
-      <p>Only the source store pays. Destination stores always install and sync for free.</p>
-    </div>
-    <div class="callout">
-      <p>&#128161; Source-pays model <span>&mdash; only your primary store needs a plan. All destination stores connect for free.</span></p>
-    </div>
-    <div class="pricing-grid">
-      <div class="plan">
-        <div class="plan-name">Free</div>
-        <div class="plan-price">$0 <small>forever</small></div>
-        <div class="plan-desc">Get started with basic sync</div>
-        <ul class="plan-list">
-          <li>2 stores</li>
-          <li>50 SKUs</li>
-          <li>One-way sync</li>
-          <li>1 sync rule</li>
-        </ul>
-        <a href="https://apps.shopify.com/stockbridge-2" class="btn btn-outline">Install Free</a>
-      </div>
-      <div class="plan">
-        <div class="plan-name">Starter</div>
-        <div class="plan-price">$9.99 <small>/mo</small></div>
-        <div class="plan-desc">For growing multi-store setups</div>
-        <ul class="plan-list">
-          <li>2 stores</li>
-          <li>500 SKUs</li>
-          <li>Bidirectional sync</li>
-          <li>Real-time webhooks</li>
-          <li>5 sync rules</li>
-        </ul>
-        <a href="https://apps.shopify.com/stockbridge-2" class="btn btn-primary">Start Free Trial</a>
-      </div>
-      <div class="plan pop">
-        <div class="plan-name">Growth</div>
-        <div class="plan-price">$34.99 <small>/mo</small></div>
-        <div class="plan-desc">For established merchants</div>
-        <ul class="plan-list">
-          <li>5 stores</li>
-          <li>5,000 SKUs</li>
-          <li>Drift analytics</li>
-          <li>Unlimited rules</li>
-          <li>Priority support</li>
-        </ul>
-        <a href="https://apps.shopify.com/stockbridge-2" class="btn btn-primary">Start Free Trial</a>
-      </div>
-      <div class="plan">
-        <div class="plan-name">Business</div>
-        <div class="plan-price">$79.99 <small>/mo</small></div>
-        <div class="plan-desc">For high-volume operations</div>
-        <ul class="plan-list">
-          <li>10 stores</li>
-          <li>20,000 SKUs</li>
-          <li>API access</li>
-          <li>Advanced rules</li>
-          <li>Dedicated support</li>
-        </ul>
-        <a href="https://apps.shopify.com/stockbridge-2" class="btn btn-primary">Start Free Trial</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section id="faq">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">FAQ</div>
-      <h2>Frequently asked questions</h2>
-    </div>
-    <div class="faq-list">
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          How does StockBridge sync inventory?
-          <span class="faq-toggle">+</span>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container">
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <span class="hero-label"
+                ><svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-store"></use>
+                </svg>
+                Made for merchants with more than one Shopify store</span
+              >
+              <h1 id="hero-title">
+                Shopify inventory sync.<br /><em>Less busywork.</em>
+              </h1>
+              <p>
+                Connect your stores. Match your products. Keep Available stock
+                in sync across your retail, wholesale, and regional Shopify
+                stores.
+              </p>
+              <div class="hero-actions">
+                <a
+                  class="button button-primary"
+                  href="https://apps.shopify.com/stockbridge-2"
+                  >Install on Shopify
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-arrow"></use></svg></a
+                ><a class="button button-secondary" href="#how-it-works"
+                  >See how it works</a
+                >
+              </div>
+              <div class="hero-note">
+                <svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-check"></use></svg
+                ><span>Free plan available</span
+                ><span>14-day trial on paid plans</span>
+              </div>
+            </div>
+            <div class="hero-visual">
+              <div
+                class="demo-window"
+                role="img"
+                aria-label="Illustrative StockBridge dashboard showing three matched product variants with equal Available quantities in a retail and wholesale store. This is sample data."
+              >
+                <div class="demo-toolbar">
+                  <span class="window-dots"><i></i><i></i><i></i></span
+                  ><span class="demo-address"
+                    ><svg class="icon" aria-hidden="true" focusable="false">
+                      <use href="#i-lock"></use>
+                    </svg>
+                    StockBridge / connected stores</span
+                  ><span>•••</span>
+                </div>
+                <div class="demo-app">
+                  <div class="demo-sidebar">
+                    <div class="demo-brand">
+                      <img
+                        src="/logo.png"
+                        alt=""
+                        width="18"
+                        height="18"
+                      />StockBridge
+                    </div>
+                    <div class="demo-nav-item selected">
+                      <svg class="icon" aria-hidden="true" focusable="false">
+                        <use href="#i-grid"></use>
+                      </svg>
+                      Overview
+                    </div>
+                    <div class="demo-nav-item">
+                      <svg class="icon" aria-hidden="true" focusable="false">
+                        <use href="#i-link"></use>
+                      </svg>
+                      Stores
+                    </div>
+                    <div class="demo-nav-item">
+                      <svg class="icon" aria-hidden="true" focusable="false">
+                        <use href="#i-barcode"></use>
+                      </svg>
+                      Mappings
+                    </div>
+                    <div class="demo-nav-item">
+                      <svg class="icon" aria-hidden="true" focusable="false">
+                        <use href="#i-location"></use>
+                      </svg>
+                      Locations
+                    </div>
+                    <div class="demo-nav-item">
+                      <svg class="icon" aria-hidden="true" focusable="false">
+                        <use href="#i-log"></use>
+                      </svg>
+                      Activity
+                    </div>
+                  </div>
+                  <div class="demo-content">
+                    <div class="demo-title-row">
+                      <span class="demo-heading">Inventory overview</span
+                      ><span class="pill">Connected</span>
+                    </div>
+                    <div class="demo-stores">
+                      <div class="demo-store">
+                        <div class="demo-store-top">
+                          <span class="store-icon"
+                            ><svg
+                              class="icon"
+                              aria-hidden="true"
+                              focusable="false"
+                            >
+                              <use href="#i-store"></use></svg></span
+                          >Retail store
+                        </div>
+                        <small>Main warehouse</small>
+                      </div>
+                      <span class="sync-arrow"
+                        ><svg class="icon" aria-hidden="true" focusable="false">
+                          <use href="#i-sync"></use></svg
+                      ></span>
+                      <div class="demo-store">
+                        <div class="demo-store-top">
+                          <span class="store-icon"
+                            ><svg
+                              class="icon"
+                              aria-hidden="true"
+                              focusable="false"
+                            >
+                              <use href="#i-store"></use></svg></span
+                          >Wholesale
+                        </div>
+                        <small>Main warehouse</small>
+                      </div>
+                    </div>
+                    <table class="demo-table">
+                      <thead>
+                        <tr>
+                          <th>Product / SKU</th>
+                          <th>Retail</th>
+                          <th>Wholesale</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            <div class="demo-product">
+                              <span class="product-tile"
+                                ><svg
+                                  class="icon"
+                                  aria-hidden="true"
+                                  focusable="false"
+                                >
+                                  <use href="#i-box"></use></svg
+                              ></span>
+                              <div>
+                                <strong>Canvas tote</strong
+                                ><small>TOTE-001</small>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="quantity">42</td>
+                          <td class="quantity">42</td>
+                          <td class="status">
+                            <svg
+                              class="icon"
+                              aria-hidden="true"
+                              focusable="false"
+                            >
+                              <use href="#i-check"></use></svg
+                            >Synced
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="demo-product">
+                              <span class="product-tile sage"
+                                ><svg
+                                  class="icon"
+                                  aria-hidden="true"
+                                  focusable="false"
+                                >
+                                  <use href="#i-box"></use></svg
+                              ></span>
+                              <div>
+                                <strong>Everyday cap</strong
+                                ><small>CAP-002</small>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="quantity">28</td>
+                          <td class="quantity">28</td>
+                          <td class="status">
+                            <svg
+                              class="icon"
+                              aria-hidden="true"
+                              focusable="false"
+                            >
+                              <use href="#i-check"></use></svg
+                            >Synced
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <div class="demo-product">
+                              <span class="product-tile rose"
+                                ><svg
+                                  class="icon"
+                                  aria-hidden="true"
+                                  focusable="false"
+                                >
+                                  <use href="#i-box"></use></svg
+                              ></span>
+                              <div>
+                                <strong>Ceramic mug</strong
+                                ><small>MUG-003</small>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="quantity">16</td>
+                          <td class="quantity">16</td>
+                          <td class="status">
+                            <svg
+                              class="icon"
+                              aria-hidden="true"
+                              focusable="false"
+                            >
+                              <use href="#i-check"></use></svg
+                            >Synced
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="demo-notice">
+                      <svg class="icon" aria-hidden="true" focusable="false">
+                        <use href="#i-check"></use>
+                      </svg>
+                      Matching variants. Connected locations. Clear activity.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="floating-note" aria-hidden="true">
+                <span class="notice-icon"
+                  ><svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-sync"></use></svg
+                ></span>
+                <div>
+                  <strong>One less manual stock update.</strong
+                  ><small>More time for the rest of your business.</small>
+                </div>
+              </div>
+              <p class="demo-caption">
+                Illustrative product preview · sample data
+              </p>
+            </div>
+          </div>
+          <div class="hero-bottom">
+            <span>Made to fit your multi-store setup.</span>
+            <div class="hero-fact">
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="#i-barcode"></use>
+              </svg>
+              <div>
+                <strong>SKU &amp; barcode matching</strong
+                ><small>Connect the right variants</small>
+              </div>
+            </div>
+            <div class="hero-fact">
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="#i-sync"></use>
+              </svg>
+              <div>
+                <strong>One-way or two-way</strong
+                ><small>Your stores, your sync direction</small>
+              </div>
+            </div>
+            <div class="hero-fact">
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="#i-store"></use>
+              </svg>
+              <div>
+                <strong>Only the source store pays</strong
+                ><small>Destination stores connect free</small>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="faq-a">StockBridge uses Shopify webhooks to detect inventory changes in real-time. When a product sells or is restocked on one store, the webhook fires and StockBridge updates all connected stores within seconds.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          Do both stores need to pay?
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a">No. Only the source (primary) store pays for the plan. Destination stores install StockBridge completely free and inherit all features from the source store's plan.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          How are products matched between stores?
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a">StockBridge auto-detects matching products by scanning barcodes and SKUs across both stores. Products with matching barcodes or exact SKU matches are automatically paired. You can also manually map products.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          What happens if both stores sell at the same time?
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a">StockBridge includes echo prevention to avoid infinite sync loops. When a sync update is made by StockBridge, it recognizes the change and prevents re-syncing it back.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          Can I sync more than 2 stores?
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a">Yes. Growth supports 5 stores and Business supports 10. All connected stores sync with each other automatically.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">
-          Is there a free plan?
-          <span class="faq-toggle">+</span>
-        </div>
-        <div class="faq-a">Yes. The Free plan includes 50 SKUs, 2 stores, and one-way sync. It is available forever with no credit card required.</div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
-<!-- CONTACT -->
-<section class="alt" id="contact">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label">Contact</div>
-      <h2>Get in touch</h2>
-      <p>Have questions about StockBridge? We're here to help.</p>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:880px;margin:0 auto">
-      <!-- Contact Form -->
-      <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:32px">
-        <h3 style="font-size:18px;font-weight:700;margin-bottom:20px">Send us a message</h3>
-        <form action="https://formsubmit.co/support@stockbridgeapp.com" method="POST" style="display:flex;flex-direction:column;gap:16px">
-          <input type="hidden" name="_subject" value="StockBridge Website Contact">
-          <input type="hidden" name="_captcha" value="false">
-          <input type="hidden" name="_next" value="https://stockbridgeapp.com">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <section class="section workflow-section" id="how-it-works">
+        <div class="container workflow-layout">
+          <div class="section-heading">
+            <span class="eyebrow">A clearer way to connect</span>
+            <h2>From separate stores to connected stock.</h2>
+            <p>
+              You do not need to copy inventory numbers between stores. Set up
+              your connections, review your product matches, and let StockBridge
+              handle updates.
+            </p>
+            <a
+              class="text-link"
+              href="/guides/sync-inventory-between-shopify-stores/"
+              >Read the setup guide
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="#i-arrow"></use></svg
+            ></a>
+          </div>
+          <ol class="workflow-steps">
+            <li>
+              <span class="step-number">01</span>
+              <div>
+                <h3>Install and connect your stores</h3>
+                <p>
+                  Install StockBridge on both Shopify stores. Send an invite
+                  from your source store and accept it in the destination store.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">02</span>
+              <div>
+                <h3>Match the products you want to sync</h3>
+                <p>
+                  Auto-detect variants by SKU or barcode. Review each pair,
+                  choose your sync direction, and map warehouse locations where
+                  needed.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span class="step-number">03</span>
+              <div>
+                <h3>Verify your setup. Then let it run.</h3>
+                <p>
+                  Check an update in both stores and the Activity Log. Paid
+                  plans use real-time webhooks; the Free plan syncs every 15
+                  minutes.
+                </p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="container">
+          <div class="section-heading split-heading">
             <div>
-              <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px">First Name *</label>
-              <input type="text" name="first_name" required style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-family:var(--font);font-size:14px;outline:none" placeholder="John">
+              <span class="eyebrow">Connected, with control</span>
+              <h2>Inventory sync that fits the way you sell.</h2>
             </div>
+            <p>
+              Choose which variants and locations belong together. Keep your
+              store network manageable as it grows.
+            </p>
+          </div>
+          <div class="features-grid">
+            <article class="feature-card feature-main">
+              <span class="feature-icon"
+                ><svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-bolt"></use></svg
+              ></span>
+              <h3>A stock change.<br />A connected update.</h3>
+              <p>
+                Sales, restocks, and manual adjustments can change Available
+                inventory. Paid plans pick up those changes through Shopify
+                webhooks.
+              </p>
+              <span class="tag">Real-time webhooks · Starter and above</span>
+              <div class="sync-widget" data-simulation>
+                <div class="sync-widget-label">
+                  <span>TOTE-001 / Available</span
+                  ><span>Interactive example</span>
+                </div>
+                <div class="sync-widget-counts">
+                  <div class="count">
+                    <strong data-count>42</strong><small>Retail store</small>
+                  </div>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-sync"></use>
+                  </svg>
+                  <div class="count">
+                    <strong data-count>42</strong><small>Wholesale store</small>
+                  </div>
+                </div>
+                <div class="demo-controls">
+                  <button type="button" data-change="-1">Try a sale −1</button
+                  ><button type="button" data-change="5">
+                    Try a restock +5
+                  </button>
+                </div>
+                <p
+                  class="simulation-note"
+                  data-simulation-status
+                  aria-live="polite"
+                  aria-atomic="true"
+                >
+                  Example only. No store data is changed.
+                </p>
+              </div>
+            </article>
+            <article class="feature-card">
+              <span class="feature-icon"
+                ><svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-barcode"></use></svg
+              ></span>
+              <h3>Match variants, not guesses.</h3>
+              <p>
+                Use SKUs or barcodes to find product pairs. Review size, color,
+                and duplicate identifiers before you connect stock.
+              </p>
+              <span class="tag">SKU &amp; barcode mapping</span>
+            </article>
+            <article class="feature-card">
+              <span class="feature-icon"
+                ><svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-sync"></use></svg
+              ></span>
+              <h3>Pick your sync direction.</h3>
+              <p>
+                Keep one store as the source, or allow updates from both stores
+                with a paid plan. Set direction to match your workflow.
+              </p>
+              <span class="tag">One-way &amp; bidirectional</span>
+            </article>
+            <article class="feature-card">
+              <span class="feature-icon"
+                ><svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-sliders"></use></svg
+              ></span>
+              <h3>Keep the controls you need.</h3>
+              <p>
+                Configure sync rules and product mappings. Growth adds
+                percentage sync and drift analytics; Business adds
+                multi-location mapping.
+              </p>
+              <div class="mini-locations">
+                <span>Warehouse A</span
+                ><svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-arrow"></use></svg
+                ><span>Warehouse B</span>
+              </div>
+            </article>
+            <article class="feature-card">
+              <span class="feature-icon"
+                ><svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-log"></use></svg
+              ></span>
+              <h3>See what changed.</h3>
+              <p>
+                Check successful, failed, and skipped sync events in the
+                Activity Log. Use drift analytics on Growth and above to
+                investigate differences.
+              </p>
+              <span class="tag">Visibility beyond the quantity</span>
+            </article>
+          </div>
+          <p class="features-footnote">
+            StockBridge currently syncs Available inventory. Features and limits
+            vary by plan.
+            <a class="text-link" href="/guides/available-vs-on-hand/"
+              >Understand inventory states
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="#i-arrow"></use></svg
+            ></a>
+          </p>
+        </div>
+      </section>
+
+      <section class="use-cases">
+        <div class="container">
+          <div class="section-heading">
+            <span class="eyebrow">One app. Different store setups.</span>
+            <h2>Built for the stores behind your business.</h2>
+          </div>
+          <div class="use-case-grid">
+            <article class="use-case">
+              <span>01 / RETAIL + WHOLESALE</span>
+              <h3>Two storefronts. Connected stock.</h3>
+              <p>
+                Link matching variants across your B2C and B2B stores while
+                keeping each store’s products, prices, and customer experience
+                separate.
+              </p>
+            </article>
+            <article class="use-case">
+              <span>02 / REGIONAL STORES</span>
+              <h3>Connect your regional catalog.</h3>
+              <p>
+                Match the products shared by your regional Shopify stores and
+                choose which inventory connections belong in your setup.
+              </p>
+            </article>
+            <article class="use-case">
+              <span>03 / GROWING CATALOGS</span>
+              <h3>Sync the products you choose.</h3>
+              <p>
+                Start with a few mapped variants or connect a larger catalog.
+                Business supports up to 20,000 SKUs per connection.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="pricing">
+        <div class="container">
+          <div class="section-heading pricing-heading">
+            <span class="eyebrow">Simple plans. Room to grow.</span>
+            <h2>One source subscription.<br />Connected destination stores.</h2>
+            <p>
+              Start free, then choose the plan that fits your store count,
+              mapped SKUs, and inventory workflow.
+            </p>
+          </div>
+          <div class="pricing-note">
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="#i-check"></use>
+            </svg>
+            Only the source store pays. Destination stores connect free.
+          </div>
+          <div class="plans">
+            <article class="plan">
+              <h3>Free</h3>
+              <p class="plan-description">A simple starting point</p>
+              <div class="plan-price">$0</div>
+              <div class="plan-cycle">Free forever</div>
+              <ul>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span><strong>2 stores</strong></span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span><strong>50 SKUs per connection</strong></span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>One-way sync</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>15-minute sync interval</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>1 sync rule</span>
+                </li>
+              </ul>
+              <a
+                class="button button-secondary"
+                href="https://apps.shopify.com/stockbridge-2"
+                aria-label="Install free — Free plan"
+                >Install free
+                <svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-arrow"></use></svg
+              ></a>
+            </article>
+            <article class="plan">
+              <h3>Starter</h3>
+              <p class="plan-description">Keep two stores connected</p>
+              <div class="plan-price">$9.99</div>
+              <div class="plan-cycle">USD / month</div>
+              <ul>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span><strong>2 stores</strong></span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span><strong>500 SKUs per connection</strong></span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>Bidirectional sync</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>Real-time webhooks</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>5 sync rules</span>
+                </li>
+              </ul>
+              <a
+                class="button button-secondary"
+                href="https://apps.shopify.com/stockbridge-2"
+                aria-label="Start free trial — Starter plan"
+                >Start free trial
+                <svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-arrow"></use></svg
+              ></a>
+            </article>
+            <article class="plan featured">
+              <span class="plan-badge">For growing brands</span>
+              <h3>Growth</h3>
+              <p class="plan-description">Room for your next store</p>
+              <div class="plan-price">$34.99</div>
+              <div class="plan-cycle">USD / month</div>
+              <ul>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span><strong>5 stores</strong></span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span><strong>5,000 SKUs per connection</strong></span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>Everything in Starter</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>Drift analytics &amp; % sync</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>20 sync rules</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>Priority support</span>
+                </li>
+              </ul>
+              <a
+                class="button button-primary"
+                href="https://apps.shopify.com/stockbridge-2"
+                aria-label="Start free trial — Growth plan"
+                >Start free trial
+                <svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-arrow"></use></svg
+              ></a>
+            </article>
+            <article class="plan">
+              <h3>Business</h3>
+              <p class="plan-description">For larger store networks</p>
+              <div class="plan-price">$79.99</div>
+              <div class="plan-cycle">USD / month</div>
+              <ul>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span><strong>10 stores</strong></span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span><strong>20,000 SKUs per connection</strong></span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>Everything in Growth</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>Multi-location mapping</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>API access &amp; 50 sync rules</span>
+                </li>
+                <li>
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-check"></use></svg
+                  ><span>Dedicated support</span>
+                </li>
+              </ul>
+              <a
+                class="button button-secondary"
+                href="https://apps.shopify.com/stockbridge-2"
+                aria-label="Start free trial — Business plan"
+                >Start free trial
+                <svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-arrow"></use></svg
+              ></a>
+            </article>
+          </div>
+          <p class="pricing-terms">
+            All prices in USD. Monthly subscriptions are billed every 30 days.
+            Paid plans include a 14-day free trial. SKU limits are per
+            connection. Annual options are available in the app.
+            <a href="https://apps.shopify.com/stockbridge-2"
+              >See current terms on Shopify.</a
+            >
+          </p>
+          <div class="plan-fit">
+            <span>Not sure which plan fits your stores?</span
+            ><a class="text-link" href="#contact"
+              >Talk through your setup
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="#i-arrow"></use></svg
+            ></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section resources" id="guides">
+        <div class="container">
+          <div class="section-heading split-heading">
             <div>
-              <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px">Last Name</label>
-              <input type="text" name="last_name" style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-family:var(--font);font-size:14px;outline:none" placeholder="Doe">
+              <span class="eyebrow">A little clarity goes a long way</span>
+              <h2>Get your inventory setup right.</h2>
             </div>
+            <a class="text-link" href="/guides/"
+              >Explore all guides
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="#i-arrow"></use></svg
+            ></a>
           </div>
-          <div>
-            <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px">Email *</label>
-            <input type="email" name="email" required style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-family:var(--font);font-size:14px;outline:none" placeholder="you@example.com">
-          </div>
-          <div>
-            <label style="font-size:13px;font-weight:600;color:var(--text-secondary);display:block;margin-bottom:6px">Message *</label>
-            <textarea name="message" required rows="4" style="width:100%;padding:10px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg-card);color:var(--text);font-family:var(--font);font-size:14px;outline:none;resize:vertical" placeholder="Tell us about your store setup or ask a question..."></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px">Send Message &rarr;</button>
-        </form>
-      </div>
-      <!-- Contact Info -->
-      <div style="display:flex;flex-direction:column;gap:20px">
-        <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px">
-          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:20px">Reach Us</div>
-          <div style="display:flex;flex-direction:column;gap:20px">
-            <div style="display:flex;align-items:center;gap:14px">
-              <span style="width:44px;height:44px;border-radius:12px;background:var(--accent-light);border:1px solid var(--border-accent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">&#9993;</span>
-              <div>
-                <div style="font-weight:600;font-size:14px;margin-bottom:2px">Email Us</div>
-                <div style="color:var(--text-secondary);font-size:13px">support@stockbridgeapp.com</div>
+          <div class="guide-grid">
+            <a
+              class="guide-card"
+              href="/guides/sync-inventory-between-shopify-stores/"
+              ><div class="guide-art" aria-hidden="true">
+                <span class="art-symbol"
+                  ><svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-sync"></use></svg
+                ></span>
               </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:14px">
-              <span style="width:44px;height:44px;border-radius:12px;background:var(--accent-light);border:1px solid var(--border-accent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">&#128205;</span>
-              <div>
-                <div style="font-weight:600;font-size:14px;margin-bottom:2px">Location</div>
-                <div style="color:var(--text-secondary);font-size:13px">Indore, Madhya Pradesh, India</div>
+              <div class="guide-card-body">
+                <span>Getting started · 6 min read</span>
+                <h3>Connect your stores with a clear setup plan</h3>
+                <p>
+                  A practical setup checklist for stores, variants, sync
+                  direction, and the first inventory check.
+                </p>
+                <span class="text-link"
+                  >Read the guide
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-arrow"></use></svg
+                ></span></div></a
+            ><a class="guide-card" href="/guides/sku-barcode-matching/"
+              ><div class="guide-art art-match" aria-hidden="true">
+                <span class="art-symbol"
+                  ><svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-barcode"></use></svg
+                ></span>
               </div>
-            </div>
-            <div style="display:flex;align-items:center;gap:14px">
-              <span style="width:44px;height:44px;border-radius:12px;background:var(--accent-light);border:1px solid var(--border-accent);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">&#9201;</span>
-              <div>
-                <div style="font-weight:600;font-size:14px;margin-bottom:2px">Response Time</div>
-                <div style="color:var(--text-secondary);font-size:13px">We reply within 24 hours on business days</div>
+              <div class="guide-card-body">
+                <span>Product mapping · 5 min read</span>
+                <h3>Better matches start with better product data</h3>
+                <p>
+                  Match the exact variant, handle duplicate identifiers, and
+                  review product pairs before you sync.
+                </p>
+                <span class="text-link"
+                  >Read the guide
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-arrow"></use></svg
+                ></span></div></a
+            ><a class="guide-card" href="/guides/available-vs-on-hand/"
+              ><div class="guide-art art-states" aria-hidden="true">
+                <span class="art-symbol"
+                  ><svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-box"></use></svg
+                ></span>
               </div>
-            </div>
+              <div class="guide-card-body">
+                <span>Inventory basics · 5 min read</span>
+                <h3>Understand the quantity you are syncing</h3>
+                <p>
+                  Why sellable stock and physical stock can differ—and which
+                  quantity StockBridge currently syncs.
+                </p>
+                <span class="text-link"
+                  >Read the guide
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-arrow"></use></svg
+                ></span></div
+            ></a>
           </div>
         </div>
-        <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:28px">
-          <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--accent);margin-bottom:16px">Quick Help</div>
-          <div style="display:flex;flex-direction:column;gap:12px">
-            <div style="font-size:14px;color:var(--text-secondary);line-height:1.65">
-              <strong style="color:var(--text)">New to StockBridge?</strong><br>
-              Install on both stores, connect via invite link, and auto-detect your product matches. Takes under 5 minutes.
-            </div>
-            <div style="font-size:14px;color:var(--text-secondary);line-height:1.65">
-              <strong style="color:var(--text)">Need help with sync?</strong><br>
-              Check the Activity Log in your dashboard for detailed sync event history and error messages.
-            </div>
+      </section>
+
+      <section class="section" id="faq">
+        <div class="container faq-layout">
+          <div class="faq-intro">
+            <span class="eyebrow">Before you connect</span>
+            <h2>A few things worth knowing.</h2>
+            <p>
+              Clear answers to the questions that come up when you sync
+              inventory between Shopify stores.
+            </p>
+            <a class="text-link" href="mailto:support@stockbridgeapp.com"
+              >Have another question? Ask us
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="#i-arrow"></use></svg
+            ></a>
+          </div>
+          <div class="faq-list">
+            <details>
+              <summary>How does StockBridge sync Shopify inventory?</summary>
+              <p>
+                StockBridge connects product variants between your Shopify
+                stores and updates their Available inventory based on your sync
+                direction and rules. Starter, Growth, and Business use Shopify
+                webhooks for real-time updates; the Free plan runs on a
+                15-minute interval.
+              </p>
+            </details>
+            <details>
+              <summary>Does StockBridge sync Available or On hand?</summary>
+              <p>
+                StockBridge currently syncs Available inventory—the quantity you
+                can sell. It does not separately mirror On hand, Committed,
+                Unavailable, or Incoming quantities. Different order commitments
+                can leave On hand totals different even when Available
+                quantities match.
+              </p>
+            </details>
+            <details>
+              <summary>Do I need a subscription on every store?</summary>
+              <p>
+                No. Only the source store pays for the connection’s plan.
+                Destination stores can install and connect without a separate
+                subscription. Features and limits depend on the source store’s
+                plan.
+              </p>
+            </details>
+            <details>
+              <summary>Can I sync only selected products?</summary>
+              <p>
+                Yes. Use SKU mappings to connect the variants you want to sync.
+                Auto-detect finds matches by SKU or barcode; review those pairs
+                before enabling them. You can also manage individual mappings.
+                Your entire catalog does not have to be connected.
+              </p>
+            </details>
+            <details>
+              <summary>Can both Shopify stores update inventory?</summary>
+              <p>
+                Bidirectional sync is available on Starter and above. It allows
+                inventory changes from either store to sync according to the
+                connection settings. For shared physical stock, agree on
+                location pairs and a restocking process first. Inventory sync
+                does not merge the stores’ order commitments into one warehouse
+                ledger.
+              </p>
+            </details>
+            <details>
+              <summary>
+                Can I connect more than two stores or multiple locations?
+              </summary>
+              <p>
+                Growth supports up to 5 stores and Business supports up to 10.
+                Business includes multi-location mapping. Each connection has
+                its own product pairs and settings, so you can choose what
+                should sync between each pair of stores.
+              </p>
+            </details>
+            <details>
+              <summary>Is there a free plan or a trial?</summary>
+              <p>
+                The Free plan includes 2 stores, up to 50 SKUs per connection,
+                one-way sync, and a 15-minute interval. Paid plans include a
+                14-day free trial. Plan prices are in USD; Shopify shows the
+                subscription terms when you approve a paid plan.
+              </p>
+            </details>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
-<!-- CTA -->
-<section class="cta-section">
-  <div class="container">
-    <h2>Ready to sync your stores?</h2>
-    <p>Install StockBridge and connect your inventory in under 5 minutes. Free plan available.</p>
-    <a href="https://apps.shopify.com/stockbridge-2" class="btn btn-primary btn-lg">Install on Shopify &rarr;</a>
-  </div>
-</section>
+      <section class="contact-section" id="contact">
+        <div class="container">
+          <div class="contact-panel">
+            <div class="contact-copy">
+              <span class="eyebrow">Support, from people</span>
+              <h2>Let’s find the right setup for your stores.</h2>
+              <p>
+                Tell us how many stores you run and what you want to sync. If
+                you need help with an update, include the SKU, locations, and
+                approximate time.
+              </p>
+              <a class="contact-email" href="mailto:support@stockbridgeapp.com"
+                ><svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-mail"></use>
+                </svg>
+                support@stockbridgeapp.com</a
+              >
+              <p class="contact-location">
+                Meridian Apps · Indore, Madhya Pradesh, India
+              </p>
+            </div>
+            <form
+              class="contact-form"
+              action="https://formsubmit.co/support@stockbridgeapp.com"
+              method="POST"
+            >
+              <input
+                type="hidden"
+                name="_subject"
+                value="StockBridge Website Contact"
+              /><input
+                type="hidden"
+                name="_next"
+                value="https://stockbridgeapp.com/?contact=sent#contact"
+              /><input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <div class="honeypot" aria-hidden="true">
+                <label for="contact-honey">Leave this empty</label
+                ><input
+                  id="contact-honey"
+                  name="_honey"
+                  type="text"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="form-row">
+                <div>
+                  <label for="contact-first">First name (required)</label
+                  ><input
+                    id="contact-first"
+                    type="text"
+                    name="first_name"
+                    autocomplete="given-name"
+                    placeholder="Your first name"
+                    maxlength="100"
+                    required
+                  />
+                </div>
+                <div>
+                  <label for="contact-last">Last name</label
+                  ><input
+                    id="contact-last"
+                    type="text"
+                    name="last_name"
+                    autocomplete="family-name"
+                    placeholder="Your last name"
+                    maxlength="100"
+                  />
+                </div>
+              </div>
+              <div>
+                <label for="contact-email">Email (required)</label
+                ><input
+                  id="contact-email"
+                  type="email"
+                  name="email"
+                  autocomplete="email"
+                  placeholder="you@yourstore.com"
+                  maxlength="254"
+                  required
+                />
+              </div>
+              <div>
+                <label for="contact-message">How can we help? (required)</label
+                ><textarea
+                  id="contact-message"
+                  name="message"
+                  rows="4"
+                  placeholder="Tell us about your stores and inventory setup…"
+                  maxlength="5000"
+                  required
+                ></textarea>
+              </div>
+              <button class="button button-primary" type="submit">
+                Send message
+                <svg class="icon" aria-hidden="true" focusable="false">
+                  <use href="#i-arrow"></use>
+                </svg>
+              </button>
+              <p class="form-note">
+                Messages are submitted through FormSubmit. Please avoid sharing
+                passwords or access tokens.
+                <a href="/privacy">Privacy policy</a>
+              </p>
+              <p
+                id="contact-result"
+                class="form-note"
+                role="status"
+                tabindex="-1"
+                hidden
+              >
+                Thank you for getting in touch. If you need to follow up, email
+                support@stockbridgeapp.com.
+              </p>
+            </form>
+          </div>
+        </div>
+      </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="container" style="flex-direction:column;gap:20px">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;width:100%">
-      <a href="/" class="logo" style="text-decoration:none">
-        <img class="logo-mark" src="logo.png" alt="StockBridge" width="34" height="34">
-        StockBridge
-      </a>
-      <div class="f-links">
-        <a href="#how-it-works">How It Works</a>
-        <a href="#features">Features</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#contact">Contact</a>
+      <section class="final-cta">
+        <div class="container cta-row">
+          <div>
+            <span class="eyebrow">Your next connection starts here</span>
+            <h2>More stores. Less inventory busywork.</h2>
+            <p>
+              Install StockBridge, connect your Shopify stores, and bring the
+              right products into sync.
+            </p>
+          </div>
+          <div class="cta-action">
+            <a
+              class="button button-lime"
+              href="https://apps.shopify.com/stockbridge-2"
+              >Get StockBridge on Shopify
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="#i-arrow"></use></svg></a
+            ><small>Free plan available · 14-day trial on paid plans</small>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a class="brand" href="/"
+              ><img src="/logo.png" alt="" width="34" height="34" /><span
+                class="brand-name"
+                >Stock<span>Bridge</span></span
+              ></a
+            >
+            <p>
+              Inventory sync for Shopify merchants with more than one store.
+              Built by Meridian Apps.
+            </p>
+          </div>
+          <div class="footer-column">
+            <h2>Product</h2>
+            <ul>
+              <li><a href="/#features">Features</a></li>
+              <li><a href="/#how-it-works">How it works</a></li>
+              <li><a href="/#pricing">Plans &amp; pricing</a></li>
+              <li>
+                <a href="https://apps.shopify.com/stockbridge-2"
+                  >Shopify App Store</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h2>Resources</h2>
+            <ul>
+              <li><a href="/guides/">Inventory sync guides</a></li>
+              <li>
+                <a href="/guides/sku-barcode-matching/"
+                  >SKU &amp; barcode matching</a
+                >
+              </li>
+              <li>
+                <a href="/guides/available-vs-on-hand/"
+                  >Available vs. On hand</a
+                >
+              </li>
+              <li><a href="/#faq">Frequently asked questions</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h2>Get in touch</h2>
+            <ul>
+              <li>
+                <a href="mailto:support@stockbridgeapp.com">Email support</a>
+              </li>
+              <li><a href="/#contact">Contact us</a></li>
+              <li><a href="/privacy">Privacy policy</a></li>
+              <li><a href="/terms">Terms of service</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 StockBridge. Indore, India.</span
+          ><span
+            >StockBridge is an independent app and is not affiliated with or
+            endorsed by Shopify Inc.</span
+          >
+        </div>
       </div>
-    </div>
-    <div style="border-top:1px solid var(--border);padding-top:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;width:100%">
-      <div class="copy">&copy; 2026 StockBridge &middot; Indore, India &middot; Not affiliated with Shopify Inc.</div>
-      <div class="f-links">
-        <a href="mailto:support@stockbridgeapp.com">support@stockbridgeapp.com</a>
-        <a href="/privacy">Privacy</a>
-        <a href="/terms">Terms</a>
-      </div>
-    </div>
-  </div>
-</footer>
-
-</body>
+    </footer>
+  </body>
 </html>

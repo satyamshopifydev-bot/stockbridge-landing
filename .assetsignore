@@ -1,0 +1,16 @@
+# This repository is also the asset directory. Publish website files only.
+*
+!index.html
+!privacy.html
+!terms.html
+!404.html
+!robots.txt
+!sitemap.xml
+!logo.png
+!og-image.png
+!favicon.ico
+!apple-touch-icon.png
+!assets/
+!assets/**
+!guides/
+!guides/**

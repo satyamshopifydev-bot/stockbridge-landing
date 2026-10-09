@@ -1,0 +1,221 @@
+{
+  "pages": [
+    {
+      "url": "/",
+      "title": "Shopify Inventory Sync for Multiple Stores | StockBridge",
+      "descriptionLength": 157,
+      "schemaTypes": [
+        "Organization",
+        "WebSite",
+        "WebPage",
+        "SoftwareApplication"
+      ],
+      "accessibilityViolations": []
+    },
+    {
+      "url": "/guides/",
+      "title": "Shopify Inventory Sync Guides | StockBridge",
+      "descriptionLength": 147,
+      "schemaTypes": [
+        "CollectionPage"
+      ],
+      "accessibilityViolations": []
+    },
+    {
+      "url": "/guides/sync-inventory-between-shopify-stores/",
+      "title": "How to sync inventory between Shopify stores | StockBridge",
+      "descriptionLength": 147,
+      "schemaTypes": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "accessibilityViolations": []
+    },
+    {
+      "url": "/guides/sku-barcode-matching/",
+      "title": "Shopify SKU & Barcode Matching Guide | StockBridge",
+      "descriptionLength": 149,
+      "schemaTypes": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "accessibilityViolations": []
+    },
+    {
+      "url": "/guides/available-vs-on-hand/",
+      "title": "Shopify Available vs. On Hand Inventory | StockBridge",
+      "descriptionLength": 156,
+      "schemaTypes": [
+        "Article",
+        "BreadcrumbList"
+      ],
+      "accessibilityViolations": []
+    },
+    {
+      "url": "/privacy",
+      "title": "Privacy Policy | StockBridge",
+      "descriptionLength": 128,
+      "schemaTypes": [],
+      "accessibilityViolations": []
+    },
+    {
+      "url": "/terms",
+      "title": "Terms of Service | StockBridge",
+      "descriptionLength": 136,
+      "schemaTypes": [],
+      "accessibilityViolations": []
+    }
+  ],
+  "widths": [
+    {
+      "url": "/",
+      "width": 320,
+      "overflowing": false
+    },
+    {
+      "url": "/",
+      "width": 390,
+      "overflowing": false
+    },
+    {
+      "url": "/",
+      "width": 768,
+      "overflowing": false
+    },
+    {
+      "url": "/",
+      "width": 1440,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/",
+      "width": 320,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/",
+      "width": 390,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/",
+      "width": 768,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/",
+      "width": 1440,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/sync-inventory-between-shopify-stores/",
+      "width": 320,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/sync-inventory-between-shopify-stores/",
+      "width": 390,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/sync-inventory-between-shopify-stores/",
+      "width": 768,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/sync-inventory-between-shopify-stores/",
+      "width": 1440,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/sku-barcode-matching/",
+      "width": 320,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/sku-barcode-matching/",
+      "width": 390,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/sku-barcode-matching/",
+      "width": 768,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/sku-barcode-matching/",
+      "width": 1440,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/available-vs-on-hand/",
+      "width": 320,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/available-vs-on-hand/",
+      "width": 390,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/available-vs-on-hand/",
+      "width": 768,
+      "overflowing": false
+    },
+    {
+      "url": "/guides/available-vs-on-hand/",
+      "width": 1440,
+      "overflowing": false
+    },
+    {
+      "url": "/privacy",
+      "width": 320,
+      "overflowing": false
+    },
+    {
+      "url": "/privacy",
+      "width": 390,
+      "overflowing": false
+    },
+    {
+      "url": "/privacy",
+      "width": 768,
+      "overflowing": false
+    },
+    {
+      "url": "/privacy",
+      "width": 1440,
+      "overflowing": false
+    },
+    {
+      "url": "/terms",
+      "width": 320,
+      "overflowing": false
+    },
+    {
+      "url": "/terms",
+      "width": 390,
+      "overflowing": false
+    },
+    {
+      "url": "/terms",
+      "width": 768,
+      "overflowing": false
+    },
+    {
+      "url": "/terms",
+      "width": 1440,
+      "overflowing": false
+    }
+  ],
+  "interactions": [
+    "Mobile menu opens, closes with Escape, and closes on navigation",
+    "FAQ expands with a native details control",
+    "Local sale and restock example updates both quantities",
+    "Contact form submits the expected fields; provider request intercepted, no email sent",
+    "Thank-you return state is accessible",
+    "Navigation, content, and native FAQs work with JavaScript disabled"
+  ],
+  "javascriptErrors": [],
+  "localLinksChecked": 13
+}
