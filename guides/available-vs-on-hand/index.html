@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Shopify Available vs. On Hand Inventory | StockBridge</title>
+    <meta
+      name="description"
+      content="Understand Shopify Available vs. On hand inventory, why quantities can differ between stores, and how StockBridge syncs Available stock at mapped locations."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#16342d" />
+    <link
+      rel="canonical"
+      href="https://stockbridgeapp.com/guides/available-vs-on-hand/"
+    />
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="StockBridge" />
+    <meta property="og:locale" content="en_US" />
+    <meta
+      property="og:title"
+      content="Shopify Available vs. On hand: what inventory sync means | StockBridge"
+    />
+    <meta
+      property="og:description"
+      content="Understand Shopify Available vs. On hand inventory, why quantities can differ between stores, and how StockBridge syncs Available stock at mapped locations."
+    />
+    <meta
+      property="og:url"
+      content="https://stockbridgeapp.com/guides/available-vs-on-hand/"
+    />
+    <meta
+      property="og:image"
+      content="https://stockbridgeapp.com/assets/stockbridge-social.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="StockBridge — Shopify inventory sync. More stores. Less busywork."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Shopify Available vs. On hand: what inventory sync means | StockBridge"
+    />
+    <meta
+      name="twitter:description"
+      content="Understand Shopify Available vs. On hand inventory, why quantities can differ between stores, and how StockBridge syncs Available stock at mapped locations."
+    />
+    <meta
+      name="twitter:image"
+      content="https://stockbridgeapp.com/assets/stockbridge-social.png"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="StockBridge — inventory sync for Shopify stores"
+    />
+    <link
+      rel="preload"
+      href="/assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script src="/assets/site.js" defer></script>
+    <noscript
+      ><style>
+        @media (max-width: 700px) {
+          .site-header {
+            position: static;
+          }
+          .nav-wrap {
+            height: auto;
+            flex-wrap: wrap;
+            padding-block: 16px;
+          }
+          .menu-toggle {
+            display: none;
+          }
+          .nav-links {
+            display: flex;
+            position: static;
+            box-shadow: none;
+            border: 0;
+            padding: 0;
+            width: 100%;
+          }
+        }
+        .demo-controls {
+          display: none;
+        }
+      </style></noscript
+    >
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Article",
+            "headline": "Shopify Available vs. On hand: what inventory sync means",
+            "description": "Understand Shopify Available vs. On hand inventory, why quantities can differ between stores, and how StockBridge syncs Available stock at mapped locations.",
+            "mainEntityOfPage": "https://stockbridgeapp.com/guides/available-vs-on-hand/",
+            "url": "https://stockbridgeapp.com/guides/available-vs-on-hand/",
+            "datePublished": "2026-10-09",
+            "dateModified": "2026-10-09",
+            "author": {
+              "@type": "Organization",
+              "name": "Meridian Apps",
+              "url": "https://stockbridgeapp.com/"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Meridian Apps",
+              "url": "https://stockbridgeapp.com/",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://stockbridgeapp.com/logo.png"
+              }
+            },
+            "image": [
+              "https://stockbridgeapp.com/assets/stockbridge-social.png"
+            ],
+            "inLanguage": "en"
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "StockBridge",
+                "item": "https://stockbridgeapp.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Guides",
+                "item": "https://stockbridgeapp.com/guides/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Shopify Available vs. On hand: what inventory sync means",
+                "item": "https://stockbridgeapp.com/guides/available-vs-on-hand/"
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <svg
+      class="svg-library"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <symbol id="i-arrow" viewBox="0 0 24 24">
+          <path d="M5 12h14m-5-5 5 5-5 5" />
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 24 24">
+          <path d="m5 12 4 4L19 6" />
+        </symbol>
+        <symbol id="i-sync" viewBox="0 0 24 24">
+          <path d="M3 8h17m-4-4 4 4-4 4M21 16H4m4-4-4 4 4 4" />
+        </symbol>
+        <symbol id="i-store" viewBox="0 0 24 24">
+          <path
+            d="m4 8 2-5h12l2 5v3a3 3 0 0 1-5 2 3 3 0 0 1-6 0 3 3 0 0 1-5-2V8Zm1 6v7h14v-7M9 21v-6h6v6M4 8h16"
+          />
+        </symbol>
+        <symbol id="i-box" viewBox="0 0 24 24">
+          <path
+            d="m12 3 9 5v9l-9 5-9-5V8l9-5Zm0 9 9-4M12 12 3 8m9 4v10M7 6l9 5"
+          />
+        </symbol>
+        <symbol id="i-bolt" viewBox="0 0 24 24">
+          <path d="m13 2-9 12h7l-1 8 10-13h-7l1-7Z" />
+        </symbol>
+        <symbol id="i-grid" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1" />
+          <rect x="14" y="3" width="7" height="7" rx="1" />
+          <rect x="3" y="14" width="7" height="7" rx="1" />
+          <rect x="14" y="14" width="7" height="7" rx="1" />
+        </symbol>
+        <symbol id="i-link" viewBox="0 0 24 24">
+          <path
+            d="m9 15 6-6m-8 4-2 2a4 4 0 0 0 6 6l4-4a4 4 0 0 0 0-6m2 0 2-2a4 4 0 0 0-6-6L9 7a4 4 0 0 0 0 6"
+          />
+        </symbol>
+        <symbol id="i-barcode" viewBox="0 0 24 24">
+          <path d="M3 5v14M6 5v14M10 5v14M13 5v14M16 5v14M21 5v14M18 5v14" />
+        </symbol>
+        <symbol id="i-location" viewBox="0 0 24 24">
+          <path d="M19 10c0 5-7 12-7 12S5 15 5 10a7 7 0 1 1 14 0Z" />
+          <circle cx="12" cy="10" r="2.5" />
+        </symbol>
+        <symbol id="i-chart" viewBox="0 0 24 24">
+          <path d="M3 3v18h18M7 15l4-5 4 3 6-8" />
+        </symbol>
+        <symbol id="i-sliders" viewBox="0 0 24 24">
+          <path d="M6 3v3m0 6v9m6-18v10m0 6v2m6-18v3m0 6v9" />
+          <circle cx="6" cy="9" r="3" />
+          <circle cx="12" cy="16" r="3" />
+          <circle cx="18" cy="9" r="3" />
+        </symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 6v6l4 2" />
+        </symbol>
+        <symbol id="i-log" viewBox="0 0 24 24">
+          <rect x="5" y="3" width="14" height="18" rx="2" />
+          <path d="M9 7h6M9 12h6M9 17h4" />
+        </symbol>
+        <symbol id="i-shield" viewBox="0 0 24 24">
+          <path d="m12 2 9 4v6c0 5-9 10-9 10S3 17 3 12V6l9-4Z" />
+          <path d="m8 11 3 3 5-5" />
+        </symbol>
+        <symbol id="i-mail" viewBox="0 0 24 24">
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="m3 6 9 7 9-7" />
+        </symbol>
+        <symbol id="i-menu" viewBox="0 0 24 24">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </symbol>
+        <symbol id="i-close" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M18 6 6 18" />
+        </symbol>
+        <symbol id="i-lock" viewBox="0 0 24 24">
+          <rect x="5" y="10" width="14" height="11" rx="2" />
+          <path d="M8 10V6a4 4 0 0 1 8 0v4" />
+        </symbol>
+        <symbol id="i-book" viewBox="0 0 24 24">
+          <path
+            d="M12 5v16M12 5C9 3 5 3 2 4v16c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1Z"
+          />
+        </symbol>
+      </defs>
+    </svg>
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a class="brand" href="/" aria-label="StockBridge home"
+          ><img src="/logo.png" alt="" width="34" height="34" /><span
+            class="brand-name"
+            >Stock<span>Bridge</span></span
+          ></a
+        >
+        <button
+          class="menu-toggle"
+          type="button"
+          aria-label="Open navigation"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <svg class="icon menu-icon" aria-hidden="true" focusable="false">
+            <use href="#i-menu"></use></svg
+          ><svg class="icon close-icon" aria-hidden="true" focusable="false">
+            <use href="#i-close"></use>
+          </svg>
+        </button>
+        <nav
+          class="nav-links"
+          id="primary-navigation"
+          aria-label="Main navigation"
+        >
+          <a href="/#how-it-works">How it works</a
+          ><a href="/#features">Features</a><a href="/#pricing">Pricing</a
+          ><a href="/guides/">Guides</a><a href="/#contact">Contact</a>
+          <a
+            class="button button-primary"
+            href="https://apps.shopify.com/stockbridge-2"
+            >Install on Shopify
+            <svg class="icon" aria-hidden="true" focusable="false">
+              <use href="#i-arrow"></use></svg
+          ></a>
+        </nav>
+      </div>
+    </header>
+    <main id="main">
+      <section class="page-hero">
+        <div class="container">
+          <div class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">StockBridge</a><span aria-hidden="true">/</span
+            ><a href="/guides/">Guides</a><span aria-hidden="true">/</span
+            ><span>Inventory basics</span>
+          </div>
+          <span class="eyebrow">Inventory basics</span>
+          <h1>Shopify Available vs. On hand: what inventory sync means</h1>
+          <p>
+            Why sellable stock and physical stock can differ—and which quantity
+            StockBridge currently syncs.
+          </p>
+          <div class="article-meta">
+            <span>By Meridian Apps</span
+            ><span><time datetime="2026-10-09">October 9, 2026</time></span
+            ><span>5 min read</span>
+          </div>
+        </div>
+      </section>
+      <div class="container article-layout">
+        <aside class="article-toc" aria-label="On this page">
+          <strong>In this guide</strong>
+          <ul>
+            <li>
+              <a href="#inventory-states"
+                >Available and On hand answer different questions</a
+              >
+            </li>
+            <li><a href="#example">A simple example of the difference</a></li>
+            <li>
+              <a href="#stockbridge-sync">What StockBridge currently syncs</a>
+            </li>
+            <li>
+              <a href="#shared-warehouse"
+                >When two stores share a physical warehouse</a
+              >
+            </li>
+            <li>
+              <a href="#restocks-transfers"
+                >Restocks and transfers: inspect the affected state</a
+              >
+            </li>
+            <li>
+              <a href="#troubleshooting"
+                >What to collect when a quantity looks wrong</a
+              >
+            </li>
+          </ul>
+        </aside>
+        <article class="article-body">
+          <section aria-labelledby="inventory-states">
+            <h2 id="inventory-states">
+              Available and On hand answer different questions
+            </h2>
+            <p>
+              When you compare stock between Shopify stores, first check which
+              inventory column you are looking at. Available describes sellable
+              units. On hand includes Available plus stock that is Committed or
+              Unavailable. Incoming stock is still on its way and is not yet
+              sellable.
+            </p>
+            <p>
+              These quantities can differ without indicating a failed inventory
+              update. Different orders or reservations in each store affect the
+              relationship between sellable stock and physical stock.
+            </p>
+          </section>
+          <section aria-labelledby="example">
+            <h2 id="example">A simple example of the difference</h2>
+            <div class="article-table-wrap">
+              <table class="article-table">
+                <thead>
+                  <tr>
+                    <th>Inventory state</th>
+                    <th>Store A</th>
+                    <th>Store B</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Available</td>
+                    <td>20</td>
+                    <td>20</td>
+                  </tr>
+                  <tr>
+                    <td>Committed</td>
+                    <td>5</td>
+                    <td>2</td>
+                  </tr>
+                  <tr>
+                    <td>Unavailable</td>
+                    <td>0</td>
+                    <td>0</td>
+                  </tr>
+                  <tr>
+                    <td>On hand</td>
+                    <td>25</td>
+                    <td>22</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              In this illustrative example, both stores have the same Available
+              quantity. Their On hand totals differ because their Committed
+              quantities differ. Copying a sellable quantity between stores does
+              not copy their underlying orders.
+            </p>
+          </section>
+          <section aria-labelledby="stockbridge-sync">
+            <h2 id="stockbridge-sync">What StockBridge currently syncs</h2>
+            <p>
+              StockBridge currently synchronizes
+              <strong>Available inventory</strong> for mapped variants and
+              locations, according to the connection’s direction and enabled
+              rules. It does not separately synchronize On hand, Committed,
+              Unavailable, or Incoming states. There is currently no selector
+              for switching the sync quantity to On hand.
+            </p>
+            <p>
+              To check whether a StockBridge update did what you expected,
+              compare Available at the specific mapped locations. A product’s
+              total across all locations can hide the warehouse-level update you
+              are trying to inspect.
+            </p>
+            <div class="article-callout">
+              <p>
+                <strong>Compare the intended result.</strong> An enabled buffer
+                or percentage sync rule can intentionally make the destination
+                quantity different from the source. Check those rules before
+                treating a difference as an error.
+              </p>
+            </div>
+          </section>
+          <section aria-labelledby="shared-warehouse">
+            <h2 id="shared-warehouse">
+              When two stores share a physical warehouse
+            </h2>
+            <p>
+              Two Shopify stores can represent the same building while
+              maintaining separate product records and separate order
+              commitments. Connecting Available inventory is useful for related
+              storefronts, but it does not turn those records into one shared
+              order or warehouse ledger.
+            </p>
+            <p>
+              If staff fulfill orders from both accounts, agree on the
+              operational workflow before expecting every inventory column to
+              match. Define where restocks are recorded, which variants and
+              location pairs represent the same stock, and which store can make
+              adjustments.
+            </p>
+            <p>
+              A requirement to keep both On hand and Available locked together
+              needs a separate review of orders, commitments, fulfillment, and
+              other inventory-writing systems. It should not be assumed from the
+              presence of bidirectional sync.
+            </p>
+          </section>
+          <section aria-labelledby="restocks-transfers">
+            <h2 id="restocks-transfers">
+              Restocks and transfers: inspect the affected state
+            </h2>
+            <p>
+              A Shopify adjustment to On hand also changes Available by the same
+              amount. Receiving a transfer can make incoming units Available.
+              The relevant question for an Available-sync connection is whether
+              sellable stock changed at its mapped location—not only whether a
+              transfer or adjustment entry exists.
+            </p>
+            <p>
+              In StockBridge, review the exact variant and location involved,
+              then inspect the Activity Log. An update at another warehouse may
+              have a different relationship to the mapped pair you are
+              investigating.
+            </p>
+          </section>
+          <section aria-labelledby="troubleshooting">
+            <h2 id="troubleshooting">
+              What to collect when a quantity looks wrong
+            </h2>
+            <ul>
+              <li>
+                Source and destination store domains, plus the selected
+                connection.
+              </li>
+              <li>The SKU and exact product variant in each store.</li>
+              <li>The mapped source and destination location names.</li>
+              <li>
+                Available, On hand, and Committed quantities at the time of the
+                discrepancy.
+              </li>
+              <li>
+                The change’s approximate time and time zone, plus its
+                inventory-history entry.
+              </li>
+              <li>Relevant Activity Log results and any enabled sync rules.</li>
+            </ul>
+            <p>
+              Send these details to
+              <a href="mailto:support@stockbridgeapp.com">StockBridge support</a
+              >. They make it possible to distinguish a different inventory
+              state from a missed update or an incorrect mapping.
+            </p>
+          </section>
+          <div class="article-sources">
+            <strong>Further reading:</strong>
+            <a
+              href="https://help.shopify.com/en/manual/inventory-and-locations/fundamentals/inventory-states"
+              >Shopify Help Center: Understanding inventory states</a
+            >. StockBridge behavior described here reflects its current
+            Available-inventory sync.
+          </div>
+          <div class="article-cta">
+            <h2>Connect the inventory that belongs together.</h2>
+            <p>
+              Start with a free plan, review your product matches, and choose
+              the sync setup that fits your stores.
+            </p>
+            <a
+              class="button button-lime"
+              href="https://apps.shopify.com/stockbridge-2"
+              >Install StockBridge
+              <svg class="icon" aria-hidden="true" focusable="false">
+                <use href="#i-arrow"></use></svg
+            ></a>
+          </div>
+        </article>
+      </div>
+      <section class="related-guides">
+        <div class="container">
+          <h2>Keep exploring</h2>
+          <div class="guide-grid">
+            <a
+              class="guide-card"
+              href="/guides/sync-inventory-between-shopify-stores/"
+              ><div class="guide-art" aria-hidden="true">
+                <span class="art-symbol"
+                  ><svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-sync"></use></svg
+                ></span>
+              </div>
+              <div class="guide-card-body">
+                <span>Getting started · 6 min read</span>
+                <h3>Connect your stores with a clear setup plan</h3>
+                <p>
+                  A practical setup checklist for stores, variants, sync
+                  direction, and the first inventory check.
+                </p>
+                <span class="text-link"
+                  >Read the guide
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-arrow"></use></svg
+                ></span></div></a
+            ><a class="guide-card" href="/guides/sku-barcode-matching/"
+              ><div class="guide-art art-match" aria-hidden="true">
+                <span class="art-symbol"
+                  ><svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-barcode"></use></svg
+                ></span>
+              </div>
+              <div class="guide-card-body">
+                <span>Product mapping · 5 min read</span>
+                <h3>Better matches start with better product data</h3>
+                <p>
+                  Match the exact variant, handle duplicate identifiers, and
+                  review product pairs before you sync.
+                </p>
+                <span class="text-link"
+                  >Read the guide
+                  <svg class="icon" aria-hidden="true" focusable="false">
+                    <use href="#i-arrow"></use></svg
+                ></span></div
+            ></a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a class="brand" href="/"
+              ><img src="/logo.png" alt="" width="34" height="34" /><span
+                class="brand-name"
+                >Stock<span>Bridge</span></span
+              ></a
+            >
+            <p>
+              Inventory sync for Shopify merchants with more than one store.
+              Built by Meridian Apps.
+            </p>
+          </div>
+          <div class="footer-column">
+            <h2>Product</h2>
+            <ul>
+              <li><a href="/#features">Features</a></li>
+              <li><a href="/#how-it-works">How it works</a></li>
+              <li><a href="/#pricing">Plans &amp; pricing</a></li>
+              <li>
+                <a href="https://apps.shopify.com/stockbridge-2"
+                  >Shopify App Store</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h2>Resources</h2>
+            <ul>
+              <li><a href="/guides/">Inventory sync guides</a></li>
+              <li>
+                <a href="/guides/sku-barcode-matching/"
+                  >SKU &amp; barcode matching</a
+                >
+              </li>
+              <li>
+                <a href="/guides/available-vs-on-hand/"
+                  >Available vs. On hand</a
+                >
+              </li>
+              <li><a href="/#faq">Frequently asked questions</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h2>Get in touch</h2>
+            <ul>
+              <li>
+                <a href="mailto:support@stockbridgeapp.com">Email support</a>
+              </li>
+              <li><a href="/#contact">Contact us</a></li>
+              <li><a href="/privacy">Privacy policy</a></li>
+              <li><a href="/terms">Terms of service</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 StockBridge. Indore, India.</span
+          ><span
+            >StockBridge is an independent app and is not affiliated with or
+            endorsed by Shopify Inc.</span
+          >
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
